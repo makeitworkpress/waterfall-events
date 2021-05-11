@@ -1,0 +1,29 @@
+// main: ../waterfall-events.less
+.wfe-details-items {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    .wfe-details-item {
+        margin-bottom: @grid-space*0.5;
+        width: 24%;
+        .wfe-details-item-register {
+            width: 100%;
+        }
+        @media screen and (max-width: 1024px) {
+            width: 49%;
+        }
+        @media screen and (max-width: 767px) {
+            width: 100%;
+        }        
+    }   
+}
+
+.wfe-details-item-terms {
+    i {
+        color: @meta;
+        .wfe-icon();
+    }
+    .atom-termlist-item:first-child {
+        margin-bottom: @grid-space*0.5;   
+    } 
+}

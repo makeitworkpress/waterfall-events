@@ -1,0 +1,62 @@
+// main: ../waterfall-events.less
+.wfe-map-filters {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: @grid-space*0.5;
+    select {
+        margin-right: @grid-space*0.5;
+        min-width: 240px;
+        width: auto;
+    }
+}
+
+.wfe-map-canvas {
+    height: 480px;
+    .gm-style .gm-style-iw-d {
+        overflow-x: hidden;
+    }   
+}
+
+.wfe-map-info-window {
+    // min-height: 240px;
+    min-width: 480px;
+    @media screen and (max-width: 767px) {
+        min-height: 120px;
+        min-width: 240px;
+    }
+    .wfe-map-info-window-description {
+        font-size: 1rem;
+        line-height: 1.5;
+        margin: 1rem 0;
+    }
+    .wfe-map-info-window-dates {
+        line-height: 1.5;
+        list-style: none;
+        padding: 0;
+    }    
+    .wfe-registration-btn {
+        margin-top: 1em;
+    }
+}
+
+.wfe-map-info-window-meta {
+    color: @meta;
+    display: inline-block;
+    margin-right: @grid-space*0.25;
+    i {
+        margin-right: @grid-space*0.125;
+    }   
+}
+
+.wfe-map-info-window-locality {
+    line-height: 1.5;
+    span {
+        color: @meta;
+    }
+}
+
+.wfe-map-info-window-dates, .wfe-map-info-window-locality {
+    i {
+        .wfe-icon();
+    }
+}

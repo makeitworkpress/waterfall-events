@@ -1,0 +1,13 @@
+{
+    "name": "waterfall-events",
+    "version": "1.0.0",
+    "author": "Michiel Tramper",
+    "description": "The package for the Waterfall Events Plugin",
+    "devDependencies": {
+        "rollup": "latest"
+    },
+    "scripts": {
+        "build": "rollup --config",
+        "watch": "rollup --config --watch"
+    }  
+}

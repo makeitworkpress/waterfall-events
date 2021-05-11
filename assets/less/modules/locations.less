@@ -1,0 +1,32 @@
+// main: ../waterfall-events.less
+.wfe-locations {
+    .wfe-locations-list {
+        display: flex;
+        flex-wrap: wrap;    
+        list-style: none;
+        margin: 1em 0;
+        padding: 0;
+        li {
+            background: #fff;
+            border-right: 1px solid @border;
+            padding: @grid-space * 0.5;
+            width: 33%;
+            @media screen and (max-width: 1024px) {
+                width: 50%;
+            }             
+            @media screen and (max-width: 767px) {
+                width: 100%;
+            }            
+        }
+    }
+    i {
+        color: @meta;
+        .wfe-icon();
+    } 
+    address {
+        font-style: normal;
+    }
+    .wfe-location-meta {
+        display: block;
+    }   
+}

@@ -1,0 +1,26 @@
+// main: ../waterfall-events.less
+.wfe-organizers {
+    .wfe-organizers-list {
+        display: flex;
+        flex-wrap: wrap;    
+        list-style: none;
+        margin-top: 1em;
+        padding: 0;
+        li {
+            background: #fff;
+            border-right: 1px solid @border;
+            padding: @grid-space * 0.5;
+            width: 25%;
+            @media screen and (max-width: 1024px) {
+                width: 50%;
+            }
+            @media screen and (max-width: 767px) {
+                width: 100%;
+            }            
+        }
+    }
+    i {
+        color: @meta;
+        .wfe-icon();
+    }    
+}
