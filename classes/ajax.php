@@ -16,12 +16,8 @@ class Ajax extends Base {
     protected function register() {
 
         $this->actions = [
-            // ['wp_ajax_getChartData', 'getChartData'],
-            // ['wp_ajax_nopriv_getChartData', 'getChartData'],
-            // ['wp_ajax_loadTables', 'loadTables'],
-            // ['wp_ajax_nopriv_loadTables', 'loadTables'],            
-            // ['wp_ajax_filterReviews', 'filterReviews'],
-            // ['wp_ajax_nopriv_filterReviews', 'filterReviews']
+            // ['wp_ajax_getData', 'getData'],
+            // ['wp_ajax_nopriv_getData', 'getData'],
         ];
 
     }
@@ -29,9 +25,8 @@ class Ajax extends Base {
     /**
      * Retrieves the chart data for a certain meta key
      */
-    public function getChartData() {
-        wp_verify_nonce( 'we-love-good-events', $_POST['action'] );
-        wp_send_json_success( $data );
-    }
+    // public function getData() {
+
+    // }
 
 }

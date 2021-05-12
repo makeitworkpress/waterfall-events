@@ -1,0 +1,24 @@
+{
+    "name": "makeitworkpress/waterfall-events",
+    "description": "Waterfall events is an event plugin that works together with the Waterfall WordPress theme.",
+    "repositories": [        
+        {
+            "type": "vcs",
+            "url": "https://github.com/makeitworkpress/wp-updater.git"
+        }        
+    ],
+    "require": {
+        "php": ">=5.3",
+        "makeitworkpress/wp-updater": "dev-master"
+    },
+    "license": "GPL",
+    "homepage": "https://github.com/makeitworkpress/waterfall-events/",
+    "authors": [ 
+        {
+            "name": "Michiel Tramper",
+            "email": "hello@makeitwork.press",
+            "homepage": "https://makeitwork.press"
+
+        } 
+    ]          
+}

@@ -19,7 +19,13 @@ class Plugin {
      * The parent theme instance
      * @access private
      */
-    private $parent = null;    
+    private $parent = null;
+
+    /**
+     * The updater  instance
+     * @access public
+     */
+    public $updater = null;        
 
     /**
      * Initial constructor
@@ -45,18 +51,23 @@ class Plugin {
      */
     private function launch() {
 
+        // Load the language, before anything else
+        load_plugin_textdomain( 'wfe', false, apply_filters('wfe_language_path', WFE_PATH . '/languages') );
+
         // Hook configurations, just before the main theme does
         add_action('after_setup_theme', [$this, 'setup'], 5);
 
-        /**
-         * Some additional hooks
-         */     
-
-        // Remove the attachment review rules, killing our category archives
+        // Remove the attachment review rules, killing our event category archives
         add_filter( 'rewrite_rules_array', function($rules) {
             unset($rules['events/[^/]+/([^/]+)/?$']);
             return $rules;
         } );
+
+        /**
+         * Adds our updater
+         */
+        $this->updater =\MakeItWorkPress\WP_Updater\Boot::instance();
+        $this->updater->add(['type' => 'plugin', 'source' => 'https://github.com/makeitworkpress/waterfall-events']);
 
     }
 
@@ -73,7 +84,8 @@ class Plugin {
          */
         $modules = [
             'Waterfall_Events\Ajax', 
-            'Waterfall_Events\Views\Archive_Events', 
+            'Waterfall_Events\Controllers\Events', 
+            'Waterfall_Events\Views\Archive_Events',
             'Waterfall_Events\Views\Single_Events'
         ];
 
@@ -104,6 +116,7 @@ class Plugin {
 
         }
 
+        // Add customizer settings
         if( is_customize_preview() ) {
 
             // require_once( WFE_PATH . '/config/customizer.php' );

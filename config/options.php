@@ -18,7 +18,8 @@ $options = [
                         'id'            => 'events_currency',
                         'title'         => __('Global Currency for Events', 'wfe'),
                         'type'          => 'input'                        
-                    ]           
+                    ],
+                            
                 ]
             ]                                       
         ]                    

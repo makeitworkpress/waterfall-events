@@ -19,7 +19,8 @@ $configurations = [
             ], 
             'name'      => 'wfe',
             'src'       => WFE_URI . 'assets/js/waterfall-events.js', 
-        ]
+        ],
+        ['handle' => 'wfe-admin-scripts', 'src' => WFE_URI . 'assets/js/waterfall-events-admin.js',  'deps' => ['wp-editor'], 'context' => 'block-editor']
     ],
     'register' => [
         'postTypes' => [
@@ -32,7 +33,7 @@ $configurations = [
                     'has_archive'   => true,
                     'hierarchical'  => true,
                     'show_in_rest'  => true,
-                    'supports'      => ['author', 'comments', 'editor', 'excerpt', 'thumbnail', 'title'], 
+                    'supports'      => ['author', 'comments', 'editor', 'excerpt', 'thumbnail', 'title', 'custom-fields'],
                     'rewrite'       => ['slug' => _x('events', 'Events Slug', 'wfe'), 'with_front' => false]
                 ]
             ],

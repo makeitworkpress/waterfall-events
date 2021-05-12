@@ -4,6 +4,7 @@
  */
 defined( 'ABSPATH' ) or die('Go eat veggies!');
 
+// Custom meta for the events post type
 $eventMeta  = [
     'frame'     => 'meta',
     'fields'    => [
@@ -211,6 +212,71 @@ $eventMeta  = [
     ]
 ];
 
+// If we have a multisite, additional advanced settings are added to the events post type
+if( is_multisite() ) {
+    $eventMeta['fields']['sections']['advanced']['fields'][] = [];
+
+    $current    = get_current_blog_id();
+    $sites      = get_sites(['site__not_in' => [$current]]);
+
+    if( $sites ) {
+
+        foreach( $sites as $site ) {
+            $eventMeta['fields']['sections']['advanced']['fields'][] = [
+                'id'            => 'wfe_event_sync_heading_' . $site->blog_id,
+                'title'         => sprintf( __('Event Synchronization for %s ', 'wfe'), $site->blogname ),
+                'type'          => 'heading',
+            ];        
+            $eventMeta['fields']['sections']['advanced']['fields'][] = [
+                'columns'       => 'half',
+                'id'            => 'wfe_event_sync_' . $site->blog_id,
+                'description'   => __('This will synchronizing this event to another event at the given site. It will not synchronize taxonomies, such as Event Categories', 'wfe'),
+                'single'        => true,
+                'style'         => 'switcher switcher-enable',
+                'title'         => __('Synchronize Event', 'wfe'),
+                'type'          => 'checkbox',
+                'options'       => [
+                    'disable' => ['label' => sprintf( __('Synchronize to %s', 'wfe'), $site->blogname )]
+                ]
+            ];
+
+            switch_to_blog($site->blog_id);
+
+            $options = wp_cache_get( md5($site->blog_id . '_wfe_event_sync') );
+
+            if( ! $options ) {
+                $options = [];
+                $posts   = get_posts(['posts_per_page' => -1, 'post_type' => 'events', 'post_status' => 'any']);
+
+                if( $posts ) {
+                    foreach( $posts as $post ) {
+                        $options[$post->ID] = $post->post_title;
+                    }
+                }
+
+                wp_cache_set( md5($site->blog_id . '_wfe_event_sync'), $options, '', 3600);
+            }
+
+            $eventMeta['fields']['sections']['advanced']['fields'][] = [
+                'columns'       => 'half',
+                'id'            => 'wfe_event_sync_target_' . $site->blog_id,
+                'description'   => __('This will sync the event from this site to the target. If you leave this empty, it will automatically setup a new event at the given site', 'wfe'),
+                'title'         => __('Target Event', 'wfe'),
+                'placeholder'   => __('Select event', 'wfe'),
+                'type'          => 'select',
+                'options'       => $options
+            ];
+        }
+
+        switch_to_blog($current);
+
+    }
+
+}
+
+/**
+ * Custom meta fields for th organizer taxonomy
+ */
 $organizerMeta  = [
     'frame'     => 'meta',
     'fields'    => [
@@ -254,6 +320,9 @@ $organizerMeta  = [
     ]
 ];
 
+/**
+ * Custom meta fields for the location taxonomy
+ */
 $locationMeta  = [
     'frame'     => 'meta',
     'fields'    => [

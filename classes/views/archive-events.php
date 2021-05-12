@@ -14,9 +14,7 @@ class Archive_Events extends \Waterfall_Events\Base {
     protected function register() {
 
         // $this->defaults = [
-        //     'reviews_archive_content_charts'            => false,    
-        //     'reviews_archive_content_compare'           => false,    
-        //     'reviews_archive_content_compare_category'  => false,    
+        //     'reviews_archive_content_charts'            => false 
         // ];
 
         // $this->actions = [
@@ -26,7 +24,7 @@ class Archive_Events extends \Waterfall_Events\Base {
 
         // $this->filters = [
         //     ['waterfall_blog_schema_post_types', 'blogSchema'],
-        //     ['waterfall_archive_posts_args', 'reviews']
+        //     ['waterfall_archive_posts_args', 'events']
         // ];
         
     }
