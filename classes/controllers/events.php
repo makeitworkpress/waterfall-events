@@ -42,7 +42,7 @@ class Events extends \Waterfall_Events\Base {
     
         if( $sites ) {
 
-            foreach( $sites as $site ) {
+            foreach( $sites as $site ) {           
 
                 register_post_meta('events', 'wfe_event_sync_target_' . $site->blog_id, [
                     'show_in_rest'  => true,

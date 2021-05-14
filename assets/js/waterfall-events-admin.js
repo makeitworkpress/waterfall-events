@@ -1,41 +1,67 @@
 
-(function () {
    
-    /**
-     * Ensures that our events select field is also updated with the correct value after saving the event
-     * Otherwise, for each save action a new event is created...
-     */
-    const { getEditedPostAttribute, isSavingPost } = wp.data.select( 'core/editor' );
-    let checked = true;
+/**
+ * Ensures that our events synchronizing select field is also updated with the correct value after saving the event for the first time
+ * Otherwise, for each save action a new event is created and the database gets messed up quickly...
+ */
+(function () {
+    const { getEditedPostAttribute, isSavingPost, getCurrentPostId } = wp.data.select( 'core/editor' );
+    let updatedMeta = {};
+    let wasSaving   = false;
 
     wp.data.subscribe( () => {
-        if ( isSavingPost() ) {
-            checked = false;
-        } else {
-            if( ! checked ) {
-                const updatedSyncEvents = getEditedPostAttribute('meta');
 
-                console.log(updatedSyncEvents);
+        if( isSavingPost() ) {
+            wasSaving = true;
+            return;
+        } 
 
-                for( property in updatedSyncEvents ) {
+        if( wasSaving ) {
+            const postId    = getCurrentPostId();
+            const postTitle = getEditedPostAttribute('title');
 
-                    if( property.indexOf('wfe_event_sync_target_') === false ) {
-                        continue;
-                    }
+            // We have to fetch our data somewhat later, because the updated meta is not immediately available.
+            setTimeout( () => {
 
-                    let syncEventSelectField = document.getElementById(property);
+                wp.apiFetch({ path: 'wp/v2/events/' + postId })
+                    .then( post => {
 
-                    // @todo - if the select field doesn't exist yet, add it
+                        // Nothing to update
+                        if( Object.keys(post.meta).length === 0 || updatedMeta === post.meta ) {
+                            return;
+                        }
 
-                    if( typeof(syncEventSelectField) !== 'undefined' ) {
-                        syncEventSelectField.value = updatedSyncEvents[property];
-                        jQuery('#' + property).val(updatedSyncEvents[property]).trigger('change');
-                    }
+                        updatedMeta = post.meta;
 
-                }
-            }
-            checked = true;
-        }   
+                        // Look in our updated meta and change the select field accordingly
+                        for( property in updatedMeta ) {
+                            
+                            // Only consider our sync targets
+                            if( property.indexOf('wfe_event_sync_target_') === false ) {
+                                continue;
+                            }   
+                            
+                            let syncEventSelectField = document.getElementById(property);
+
+                            // Continue if we already have a value
+                            if( syncEventSelectField.value ) {
+                                continue;
+                            }
+
+                            // First, add a new option to the select field and trigger the value change
+                            syncEventSelectField.innerHTML = '<option value="' + updatedMeta[property] + '">' + postTitle + '</option>' + syncEventSelectField.innerHTML;
+                            syncEventSelectField.value = updatedMeta[property];
+                            jQuery('#' + property).val(updatedMeta[property]).trigger('change');
+
+                        }
+                    })
+                    .catch( error => console.log(error) );
+            }, 500);
+
+        }
+
+        wasSaving = false;   
+ 
     });
 
 })();

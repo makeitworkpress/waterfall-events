@@ -246,7 +246,7 @@ if( is_multisite() ) {
 
             if( ! $options ) {
                 $options = [];
-                $posts   = get_posts(['posts_per_page' => -1, 'post_type' => 'events', 'post_status' => 'any']);
+                $posts   = get_posts(['posts_per_page' => -1, 'post_type' => 'events', 'post_status' => ['publish', 'future', 'draft', 'pending', 'private']]);
 
                 if( $posts ) {
                     foreach( $posts as $post ) {
