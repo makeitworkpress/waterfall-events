@@ -222,18 +222,14 @@ if( is_multisite() ) {
     if( $sites ) {
 
         foreach( $sites as $site ) {
-            $eventMeta['fields']['sections']['advanced']['fields'][] = [
-                'id'            => 'wfe_event_sync_heading_' . $site->blog_id,
-                'title'         => sprintf( __('Event Synchronization for %s ', 'wfe'), $site->blogname ),
-                'type'          => 'heading',
-            ];        
+                
             $eventMeta['fields']['sections']['advanced']['fields'][] = [
                 'columns'       => 'half',
                 'id'            => 'wfe_event_sync_' . $site->blog_id,
                 'description'   => __('This will synchronizing this event to another event at the given site. It will not synchronize taxonomies, such as Event Categories', 'wfe'),
                 'single'        => true,
                 'style'         => 'switcher switcher-enable',
-                'title'         => __('Synchronize Event', 'wfe'),
+                'title'         => sprintf( __('Synchronize Event to %s', 'wfe'), $site->blogname ),
                 'type'          => 'checkbox',
                 'options'       => [
                     'disable' => ['label' => sprintf( __('Synchronize to %s', 'wfe'), $site->blogname )]
@@ -261,7 +257,7 @@ if( is_multisite() ) {
                 'columns'       => 'half',
                 'id'            => 'wfe_event_sync_target_' . $site->blog_id,
                 'description'   => __('This will sync the event from this site to the target. If you leave this empty, it will automatically setup a new event at the given site', 'wfe'),
-                'title'         => __('Target Event', 'wfe'),
+                'title'         => sprintf( __('Target Event on %s', 'wfe'), $site->blogname ),
                 'placeholder'   => __('Select event', 'wfe'),
                 'type'          => 'select',
                 'options'       => $options

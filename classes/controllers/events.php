@@ -142,20 +142,23 @@ class Events extends \Waterfall_Events\Base {
                 'post_type'     => $post->post_type
             ]);
 
+            // wp_die( var_dump($meta) );
+
             // Update our metadata
             foreach( $meta as $key => $values) {
-
-                // Skip any synchronization settings from the existing event
-                if( strpos($key, 'wfe_event_sync_') !== false ) {
-                    continue;
+                
+                // Skip site synchronization settings  and empty them out, otherwise, update the meta
+                if( mb_strpos($key, 'wfe_event_sync_') === false ) {
+                    update_post_meta( $syncedID, $key, $values[0] );
+                } elseif( mb_strpos($key, 'wfe_event_sync_') !== false ) {
+                    update_post_meta( $syncedID, $key, '' );
                 }
-                update_post_meta( $syncedID, $key, $values[0] );
 
             }   
             
             // Update our upstream synchronization (synchronisation is one way for now)
-            // update_post_meta( $syncedID, 'wfe_event_sync_' . $current_blog_id, true );
-            // update_post_meta( $syncedID, 'wfe_event_sync_target_' . $current_blog_id, $id );
+            // update_post_meta( $syncedID, 'wfe_event_sync_' . $current_blog_id, false );
+            // update_post_meta( $syncedID, 'wfe_event_sync_target_' . $current_blog_id, '' );
 
             // Check if we have a featured image, and check it's existence or upload it
             if( $featured_image ) {
