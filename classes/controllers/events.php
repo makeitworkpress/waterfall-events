@@ -244,6 +244,12 @@ class Events extends \Waterfall_Events\Base {
             }
         } 
 
+        if( ! function_exists('media_sideload_image') ) {
+            require_once(ABSPATH . 'wp-admin/includes/media.php');
+            require_once(ABSPATH . 'wp-admin/includes/file.php');
+            require_once(ABSPATH . 'wp-admin/includes/image.php');            
+        }
+
         $upload = media_sideload_image($attachment['url'], 0, null, 'id');
         if( ! is_wp_error($upload) && is_numeric($upload) ) {
             $id = $upload;
