@@ -20,7 +20,7 @@ $configurations = [
             'name'      => 'wfe',
             'src'       => WFE_URI . 'assets/js/waterfall-events.js', 
         ],
-        ['handle' => 'wfe-admin-scripts', 'src' => WFE_URI . 'assets/js/waterfall-events-admin.js',  'deps' => ['wp-editor'], 'context' => 'block-editor']
+        ['handle' => 'wfe-admin-scripts', 'src' => WFE_URI . 'assets/js/wfe-admin.js',  'deps' => ['wp-editor'], 'context' => 'block-editor']
     ],
     'register' => [
         'postTypes' => [

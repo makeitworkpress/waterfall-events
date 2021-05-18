@@ -7,6 +7,12 @@
         margin-right: @grid-space*0.5;
         min-width: 240px;
         width: auto;
+        @media screen and (max-width: 767px) {
+            margin-bottom: @grid-space*0.5;   
+            &:last-of-type {
+                margin-bottom: 0;
+            }
+        }
     }
 }
 
