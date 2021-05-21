@@ -1,4 +1,5 @@
 export default {
+    clusters: {},
     markers: {},
     maps: {},
     initialize() {
@@ -14,7 +15,7 @@ export default {
 
             // Set-up main functionalities
             this.createMap(el, config);
-            this.addMarkers(el, config.markers, config.fit);
+            this.addMarkers(el, config.markers, config.fit, config.clusterIconPath);
             this.addFilter(el, config);
 
         });
@@ -57,7 +58,7 @@ export default {
      * @param {Boolean} fitBoundaries Whether to fit the map bounds to the markers or not
      * @returns {void}  
      */
-    addMarkers(el, markers = [], fitBoundaries = true) {
+    addMarkers(el, markers = [], fitBoundaries = true, clusterIconPath = null) {
 
         if( markers.length < 1 ) {
             return;
@@ -92,6 +93,11 @@ export default {
             this.markers[el.id].push(mapsMarker);
 
         } );
+
+        // If the markercluster script exists, we cluster our markers
+        if( typeof(MarkerClusterer) !== 'undefined' ) {
+            this.clusters[el.id] = new MarkerClusterer( this.maps[el.id], this.markers[el.id], { imagePath: clusterIconPath ? clusterIconPath + 'm' : wfe.url + 'assets/img/m' } );
+        }
 
         // Fit the bounds of the maps to the markers
         if( fitBoundaries ) {
@@ -153,6 +159,7 @@ export default {
 
     /**
      * Retrieves and formats the infowindow content for a marker
+     * 
      * @param {object} marker The marker configuration object 
      */
     getInfoWindowContent(marker) {

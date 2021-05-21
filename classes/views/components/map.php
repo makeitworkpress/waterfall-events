@@ -13,6 +13,8 @@ class Map extends Component {
 
         $this->params = wp_parse_args( $this->params, [
             'center'    => ['lat' => 52.090736, 'lng' => 5.121420],  
+            'cluster'   => false, // Whether to cluster markers or not
+            'clusterip' => wf_get_data('options', 'events_cluster_icon_path'), // Path to the custom cluster icons including trailing slash; icons should be named m1.png, m2.png, m3.png, m4.png, m5.png respectively and have similar sizes
             'fit'       => false, // Fits map to markers by default       
             'filters'   => ['country' => __('All countries', 'wfe')], // categories, country, tags
             'id'        => uniqid(), // Unique ID for the map
@@ -28,6 +30,9 @@ class Map extends Component {
      */
     protected function format() {
 
+        /**
+         * Formats our markers
+         */
         if( ! $this->params['markers'] ) {
 
             $events = get_posts(['fields' => 'ids', 'post_type' => 'events', 'posts_per_page' => -1]);
@@ -140,7 +145,12 @@ class Map extends Component {
          */
         if( ! wp_script_is('google-maps-js') && apply_filters('components_maps_script', true) ) {
             wp_enqueue_script('google-maps-js'); 
-        }         
+        }
+
+        // Enqueues our markercluster script
+        if( ! wp_script_is('wfe-markercluster') && $this->params['cluster'] ) {
+            wp_enqueue_script('wfe-markercluster'); 
+        }           
 
         /**
          * Adds the map settings to the footer as a script. This allows the general JS to pickup these settings and create a custom map
@@ -157,6 +167,7 @@ class Map extends Component {
         echo '<script type="text/javascript">
             var wfeMap' . $this->props['id'] . '= { 
                 center: ' . json_encode($this->params['center']) . ',
+                clusterIconPath: "' . $this->params['clusterip'] . '",
                 fit: ' . json_encode($this->params['fit']) . ',
                 markers: ' . json_encode($this->params['markers']) . ', 
                 styles: ' . $styles . ',

@@ -2,6 +2,7 @@
     'use strict';
 
     var map = {
+        clusters: {},
         markers: {},
         maps: {},
         initialize() {
@@ -17,7 +18,7 @@
 
                 // Set-up main functionalities
                 this.createMap(el, config);
-                this.addMarkers(el, config.markers, config.fit);
+                this.addMarkers(el, config.markers, config.fit, config.clusterIconPath);
                 this.addFilter(el, config);
 
             });
@@ -60,7 +61,7 @@
          * @param {Boolean} fitBoundaries Whether to fit the map bounds to the markers or not
          * @returns {void}  
          */
-        addMarkers(el, markers = [], fitBoundaries = true) {
+        addMarkers(el, markers = [], fitBoundaries = true, clusterIconPath = null) {
 
             if( markers.length < 1 ) {
                 return;
@@ -95,6 +96,11 @@
                 this.markers[el.id].push(mapsMarker);
 
             } );
+
+            // If the markercluster script exists, we cluster our markers
+            if( typeof(MarkerClusterer) !== 'undefined' ) {
+                this.clusters[el.id] = new MarkerClusterer( this.maps[el.id], this.markers[el.id], { imagePath: clusterIconPath ? clusterIconPath + 'm' : wfe.url + 'assets/img/m' } );
+            }
 
             // Fit the bounds of the maps to the markers
             if( fitBoundaries ) {
@@ -156,6 +162,7 @@
 
         /**
          * Retrieves and formats the infowindow content for a marker
+         * 
          * @param {object} marker The marker configuration object 
          */
         getInfoWindowContent(marker) {
@@ -191,7 +198,7 @@
                 ${infoWindow.locationName ? '<b>' + infoWindow.locationName + '</b>' : ''}
                 ${infoWindow.street} ${infoWindow.number} ${infoWindow.city} ${infoWindow.country ? '<span>' + infoWindow.country + '</span>' : ''}
             </div>
-            ${infoWindow.buttonLink ? '<a class="wfe-registration-btn atom-button" href="' + infoWindow.buttonLink + '" target="_blank">' + infoWindow.buttonLabel + '</a>' : ''}
+            ${infoWindow.buttonLink ? '<a class="wfe-registration-btn primary atom-button" href="' + infoWindow.buttonLink + '" target="_blank">' + infoWindow.buttonLabel + '</a>' : ''}
         </div>`;
 
             return windowContent;

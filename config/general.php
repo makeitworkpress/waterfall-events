@@ -15,11 +15,13 @@ $configurations = [
             'localize'  => [
                 'ajaxUrl'       => admin_url( 'admin-ajax.php' ),
                 'debug'         => WP_DEBUG,
-                'nonce'         => wp_create_nonce( 'we-love-good-events' ),                
+                'nonce'         => wp_create_nonce( 'we-love-good-events' ),
+                'url'           => WFE_URI
             ], 
             'name'      => 'wfe',
-            'src'       => WFE_URI . 'assets/js/waterfall-events.js', 
+            'src'       => WFE_URI . 'assets/js/wfe.js',
         ],
+        ['handle' => 'wfe-markercluster', 'src' => 'https://unpkg.com/@googlemaps/markerclustererplus/dist/index.min.js', 'action' => 'register'],
         ['handle' => 'wfe-admin-scripts', 'src' => WFE_URI . 'assets/js/wfe-admin.js',  'deps' => ['wp-editor'], 'context' => 'block-editor']
     ],
     'register' => [

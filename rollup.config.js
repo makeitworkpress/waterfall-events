@@ -5,7 +5,7 @@ export default {
         clearScreen: false
     },    
     output: {
-        file: './assets/js/waterfall-events.js',
+        file: './assets/js/wfe.js',
         format: 'iife'
     }
 };

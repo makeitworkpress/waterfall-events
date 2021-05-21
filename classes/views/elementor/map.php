@@ -75,7 +75,7 @@ class Map extends Elementor\Widget_Base {
 			'latitude',
 			[
 				'label'     	=> __( 'Latitude', 'wfe' ),
-				'description'   => __( 'The default latitude for the center of map', 'wfe' ),
+				'description'   => __( 'The default latitude for the center of map. You can use google maps to determine the desired latitude.', 'wfe' ),
 				'type'      	=> Controls_Manager::TEXT,
 				'default'   	=> 52.090736,
 			]
@@ -85,7 +85,7 @@ class Map extends Elementor\Widget_Base {
 			'longitude',
 			[
 				'label'     	=> __( 'Longitude', 'wfe' ),
-				'description'   => __( 'The default longitude for the center of map', 'wfe' ),
+				'description'   => __( 'The default longitude for the center of map. You can use google maps to determine the desired longitude.', 'wfe' ),
 				'type'      	=> Controls_Manager::TEXT,
 				'default'   	=> 5.121420,
 			]
@@ -96,6 +96,19 @@ class Map extends Elementor\Widget_Base {
 			[
 				'label'     	=> __( 'Fit Map to Markers', 'wfe' ),
 				'description'   => __( 'Fits the map to existing markers, ignoring other settings.', 'wfe' ),
+				'type'      	=> Controls_Manager::SWITCHER,
+				'default'   	=> '',
+				'label_on'  	=> __( 'Yes', 'wfe' ),
+				'label_off' 	=> __( 'No', 'wfe' ),
+				'separator' 	=> 'before'
+			]
+		);
+		
+		$this->add_control(
+			'cluster',
+			[
+				'label'     	=> __( 'Cluster Map Markers', 'wfe' ),
+				'description'   => __( 'Clusters map markers. Useful if you have many markers close to each other.', 'wfe' ),
 				'type'      	=> Controls_Manager::SWITCHER,
 				'default'   	=> '',
 				'label_on'  	=> __( 'Yes', 'wfe' ),
@@ -220,6 +233,7 @@ class Map extends Elementor\Widget_Base {
 		// Render our map
 		$map = new \Waterfall_Events\Views\Components\Map( [
 			'center' 	=> ['lat' => (float) $settings['latitude'], 'lng' => (float) $settings['longitude']],
+			'cluster'	=> $settings['cluster'],
 			'fit'		=> $settings['fit'],
 			'filters'  	=> $filters,
 			'styles'	=> $settings['styles'],

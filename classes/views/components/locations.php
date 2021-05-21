@@ -23,9 +23,18 @@ class Locations extends Component {
             global $post;
             $this->params['post_id'] = $post->ID;
         }
+
+        $icon = get_post_meta($this->params['post_id'], 'wfe_location_icon', true);
         
         // Retrieve the locations
-        $defaults   = ['email' => '', 'icon' => get_post_meta($this->params['post_id'], 'wfe_location_icon', true), 'link' => '', 'name' => '', 'phone' => '', 'website' => ''];
+        $defaults   = [
+            'email'     => '', 
+            'icon'      => $icon ? esc_url(wp_get_attachment_url( rtrim($icon, ','))) : '',
+            'link'      => '', 
+            'name'      => '', 
+            'phone'     => '', 
+            'website'   => ''
+        ];
         $location   = (array) get_post_meta($this->params['post_id'], 'wfe_location', true) + $defaults;
         $this->props['locations']   = [];
         $this->props['title']       = $this->params['title'];
@@ -35,9 +44,10 @@ class Locations extends Component {
             if( is_array($location_terms) && $location_terms ) {
                 foreach($location_terms as $term_id => $term_name) {
                     $term_meta = get_term_meta($term_id, 'wfe_location_meta', true);
+
                     $this->props['locations'][$term_id]    = [
                         'email'     => isset($term_meta['email']) && is_email($term_meta['email']) ? $term_meta['email']: '',
-                        'icon'      => isset($term_meta['location_icon']) ? $term_meta['location_icon']: '',
+                        'icon'      => isset($term_meta['location_icon']) && $term_meta['location_icon'] ? esc_url(wp_get_attachment_url( rtrim($term_meta['location_icon'], ','))) : '',
                         'link'      => esc_url( get_term_link($term_id) ),
                         'name'      => esc_html($term_name),
                         'phone'     => isset($term_meta['phone']) ? esc_html($term_meta['phone']) : '', 
