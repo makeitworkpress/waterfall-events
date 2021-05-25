@@ -2,6 +2,7 @@
     'use strict';
 
     var map = {
+        config: {}, 
         clusters: {},
         markers: {},
         maps: {},
@@ -12,14 +13,18 @@
             }
 
             document.querySelectorAll('.wfe-map').forEach( (el) => {
-
-                // Unique map configurations
-                const config = window['wfeMap' + el.id];
+                
+                if( typeof(window['wfeMap' + el.id]) === 'undefined' ) {
+                    return;
+                }
+                
+                // Unique map configurations, moving the config inside the object
+                this.config[el.id] = window['wfeMap' + el.id];
 
                 // Set-up main functionalities
-                this.createMap(el, config);
-                this.addMarkers(el, config.markers, config.fit, config.clusterIconPath);
-                this.addFilter(el, config);
+                this.createMap(el);
+                this.addMarkers(el, this.config[el.id].markers, this.config[el.id].fit);
+                this.addFilter(el, this.config[el.id].markers);
 
             });
 
@@ -28,12 +33,12 @@
         /**
          * Creates the filter
          * @param {*} el The map element
-         * @param {object} config The configurations related to the map element
+         * @param {Array} markers The marker configurations related to the map element
          */
-        addFilter(el, config) {    
+        addFilter(el, markers) {    
             el.querySelectorAll('select').forEach( (select) => {
                 select.addEventListener('change', () => {
-                    this.filterMarkers(el, config.markers);
+                    this.filterMarkers(el, markers);
                 });
             });
         },
@@ -41,14 +46,13 @@
         /**
          * Creates the map
          * @param {*} el The map element
-         * @param {object} config The configurations related to the map element
          */
-        createMap(el, config) {
+        createMap(el) {
 
             this.maps[el.id] = new google.maps.Map( el.querySelector('.wfe-map-canvas'), {
-                    center: config.center,
-                    styles: config.styles,
-                    zoom: config.zoom
+                    center: this.config[el.id].center,
+                    styles: this.config[el.id].styles,
+                    zoom: this.config[el.id].zoom
                 } 
             );
         },
@@ -58,10 +62,10 @@
          * 
          * @param {Element Node} el The map element
          * @param {Object} markers The markers that need to be added
-         * @param {Boolean} fitBoundaries Whether to fit the map bounds to the markers or not
+         * @param {Boolean} fitBoundaries Whether to fit the map or not
          * @returns {void}  
          */
-        addMarkers(el, markers = [], fitBoundaries = true, clusterIconPath = null) {
+        addMarkers(el, markers, fitBoundaries = false) {
 
             if( markers.length < 1 ) {
                 return;
@@ -98,8 +102,8 @@
             } );
 
             // If the markercluster script exists, we cluster our markers
-            if( typeof(MarkerClusterer) !== 'undefined' ) {
-                this.clusters[el.id] = new MarkerClusterer( this.maps[el.id], this.markers[el.id], { imagePath: clusterIconPath ? clusterIconPath + 'm' : wfe.url + 'assets/img/m' } );
+            if( typeof(MarkerClusterer) !== 'undefined' && this.config[el.id].cluster ) {
+                this.clusters[el.id] = new MarkerClusterer( this.maps[el.id], this.markers[el.id], { imagePath: this.config[el.id].clusterIconPath ? this.config[el.id].clusterIconPath + 'm' : wfe.url + 'assets/img/m' } );
             }
 
             // Fit the bounds of the maps to the markers
@@ -119,7 +123,7 @@
          * Updates the markers, based upon filtering
          * 
          * @param {Node Element} el The parent element we're filtering for
-         * @param {Array} markers The array with all markers, retrieved from the maps configuration
+         * @param {Array} markers The map markers
          */
         filterMarkers(el, markers) {
 
@@ -143,8 +147,8 @@
                 });
             }
 
-            // And add the filtered markers again
-            this.addMarkers(el, markers);
+            // And add the filtered markers again; and always fit when filtering
+            this.addMarkers(el, markers, true); 
 
         },
 
@@ -154,10 +158,18 @@
          * @param {Node Element} el The current map element
          */ 
         clearMarkers(el) {
+
+            // Clear markercluster
+            if( typeof(this.clusters[el.id]) !== 'undefined' ) {
+                this.clusters[el.id].clearMarkers();   
+            }
+
+            // Reset markers
             this.markers[el.id].forEach( (marker) => {
                 marker.setMap(null);
             });
             this.markers[el.id] = [];
+
         },
 
         /**

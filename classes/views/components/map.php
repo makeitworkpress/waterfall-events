@@ -167,6 +167,7 @@ class Map extends Component {
         echo '<script type="text/javascript">
             var wfeMap' . $this->props['id'] . '= { 
                 center: ' . json_encode($this->params['center']) . ',
+                cluster: "' . $this->params['cluster'] . '",
                 clusterIconPath: "' . $this->params['clusterip'] . '",
                 fit: ' . json_encode($this->params['fit']) . ',
                 markers: ' . json_encode($this->params['markers']) . ', 
