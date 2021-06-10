@@ -33,7 +33,7 @@ class Dates extends Component {
         $format = get_option('date_format_custom') ? get_option('date_format_custom') : get_option('date_format');
         switch( get_post_meta($this->params['id'], 'wfe_type', true) ) {
             case 'multiday':
-                $dates = (array) get_post_meta($this->params['id'], 'wfe_multiday_date', true);
+                $dates = (array) maybe_unserialize( get_post_meta($this->params['id'], 'wfe_multiday_date', true) );
                 foreach( $dates as $date ) {
                     $this->props['dates'][] = [
                         'endDate'   => '', 

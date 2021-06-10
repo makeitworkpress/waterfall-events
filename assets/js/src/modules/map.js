@@ -100,7 +100,15 @@ export default {
 
         // If the markercluster script exists, we cluster our markers
         if( typeof(MarkerClusterer) !== 'undefined' && this.config[el.id].cluster ) {
-            this.clusters[el.id] = new MarkerClusterer( this.maps[el.id], this.markers[el.id], { imagePath: this.config[el.id].clusterIconPath ? this.config[el.id].clusterIconPath + 'm' : wfe.url + 'assets/img/m' } );
+            console.log(this.config[el.id]);
+            this.clusters[el.id] = new MarkerClusterer(
+                this.maps[el.id], 
+                this.markers[el.id],
+                { 
+                    gridSize: this.config[el.id].clusterGridSize ? +this.config[el.id].clusterGridSize : 60,
+                    imagePath: this.config[el.id].clusterIconPath ? this.config[el.id].clusterIconPath + 'm' : wfe.url + 'assets/img/m' 
+                } 
+            );
         }
 
         // Fit the bounds of the maps to the markers

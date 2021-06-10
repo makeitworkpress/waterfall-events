@@ -16,7 +16,7 @@ class Map extends Elementor\Widget_Base {
 	 * @return array Script handles
 	 */		
 	public function get_script_depends() {
-        return ['google-maps-js', 'waterfall-events'];
+        return ['google-maps-js', 'wfe-markercluster', 'wfe-scripts'];
     }  	
 
 	/**
@@ -115,7 +115,22 @@ class Map extends Elementor\Widget_Base {
 				'label_off' 	=> __( 'No', 'wfe' ),
 				'separator' 	=> 'before'
 			]
-		);		
+		);	
+		
+		$this->add_control(
+			'clustersize',
+			[
+				'label'     	=> __( 'Grid Size', 'wfe' ),
+				'description'   => __( 'The grid size for clusters. The larger the size, the sooner markers will cluster.', 'wfe' ),
+				'type'      	=> Controls_Manager::SLIDER,
+				'default'   	=> ['size' => 60],
+				'size_units'	=> [''],
+				'range'   		=> ['min' => 0, 'max' => 100, 'step' => 1],
+				'condition' => [
+					'cluster' => 'yes'
+				],				
+			]
+		); 		
 		
 		$this->add_control(
 			'zoom',
@@ -232,12 +247,13 @@ class Map extends Elementor\Widget_Base {
 		
 		// Render our map
 		$map = new \Waterfall_Events\Views\Components\Map( [
-			'center' 	=> ['lat' => (float) $settings['latitude'], 'lng' => (float) $settings['longitude']],
-			'cluster'	=> $settings['cluster'],
-			'fit'		=> $settings['fit'],
-			'filters'  	=> $filters,
-			'styles'	=> $settings['styles'],
-			'zoom'		=> $settings['zoom']
+			'center' 		=> ['lat' => (float) $settings['latitude'], 'lng' => (float) $settings['longitude']],
+			'cluster'		=> $settings['cluster'],
+			'clustersize'	=> $settings['clustersize']['size'],
+			'fit'			=> $settings['fit'],
+			'filters'  		=> $filters,
+			'styles'		=> $settings['styles'],
+			'zoom'			=> $settings['zoom']
 		] );
 		$map->render();
 

@@ -35,7 +35,7 @@ class Locations extends Component {
             'phone'     => '', 
             'website'   => ''
         ];
-        $location   = (array) get_post_meta($this->params['post_id'], 'wfe_location', true) + $defaults;
+        $location   = (array) maybe_unserialize( get_post_meta($this->params['post_id'], 'wfe_location', true) ) + $defaults;
         $this->props['locations']   = [];
         $this->props['title']       = $this->params['title'];
 
@@ -43,7 +43,7 @@ class Locations extends Component {
             $location_terms = wp_get_post_terms($this->params['post_id'], 'events_location', ['fields' => 'id=>name']);
             if( is_array($location_terms) && $location_terms ) {
                 foreach($location_terms as $term_id => $term_name) {
-                    $term_meta = get_term_meta($term_id, 'wfe_location_meta', true);
+                    $term_meta = maybe_unserialize( get_term_meta($term_id, 'wfe_location_meta', true) );
 
                     $this->props['locations'][$term_id]    = [
                         'email'     => isset($term_meta['email']) && is_email($term_meta['email']) ? $term_meta['email']: '',

@@ -12,15 +12,16 @@ class Map extends Component {
     protected function initialize() {
 
         $this->params = wp_parse_args( $this->params, [
-            'center'    => ['lat' => 52.090736, 'lng' => 5.121420],  
-            'cluster'   => false, // Whether to cluster markers or not
-            'clusterip' => wf_get_data('options', 'events_cluster_icon_path'), // Path to the custom cluster icons including trailing slash; icons should be named m1.png, m2.png, m3.png, m4.png, m5.png respectively and have similar sizes
-            'fit'       => false, // Fits map to markers by default       
-            'filters'   => ['country' => __('All countries', 'wfe')], // categories, country, tags
-            'id'        => uniqid(), // Unique ID for the map
-            'markers'   => [], // Custom markers, keys: ['categories', country, dates => [['enddate', 'endtime', 'startdate', 'starttime', 'title']], icon, lat, lng, infowindow => [button_label, button_link, categories, description, event_link, tags, title], number, postalCoda, street, tags]
-            'styles'    => '', // JSON styles (for example from snazzy maps), which allows custom map styling
-            'zoom'      => 11
+            'center'        => ['lat' => 52.090736, 'lng' => 5.121420],  
+            'cluster'       => false, // Whether to cluster markers or not
+            'clusterip'     => wf_get_data('options', 'events_cluster_icon_path'), // Path to the custom cluster icons including trailing slash; icons should be named m1.png, m2.png, m3.png, m4.png, m5.png respectively and have similar sizes
+            'clustersize'   => 60, // The grid size of clusters. The lower, the later markers get clustered. See https://googlemaps.github.io/js-markerclustererplus/interfaces/markerclustereroptions.html#gridsize
+            'fit'           => false, // Fits map to markers by default       
+            'filters'       => ['country' => __('All countries', 'wfe')], // categories, country, tags
+            'id'            => uniqid(), // Unique ID for the map
+            'markers'       => [], // Custom markers, keys: ['categories', country, dates => [['enddate', 'endtime', 'startdate', 'starttime', 'title']], icon, lat, lng, infowindow => [button_label, button_link, categories, description, event_link, tags, title], number, postalCoda, street, tags]
+            'styles'        => '', // JSON styles (for example from snazzy maps), which allows custom map styling
+            'zoom'          => 11
         ] );
 
     }
@@ -43,7 +44,7 @@ class Map extends Component {
 
                     $categories = wp_get_post_terms($id, 'events_category', ['fields' => 'id=>name']);
                     $dates      = new Dates(['id' => $id]);
-                    $location   = (array) get_post_meta($id, 'wfe_location', true) + ['icon' => get_post_meta($id, 'wfe_location_icon', true), 'name' => ''];
+                    $location   = (array) maybe_unserialize( get_post_meta($id, 'wfe_location', true) ) + ['icon' => get_post_meta($id, 'wfe_location_icon', true), 'name' => ''];
                     $locations  = [];
                     $tags       = wp_get_post_terms($id, 'events_tag', ['fields' => 'id=>name']);
 
@@ -52,7 +53,7 @@ class Map extends Component {
                         $location_terms = wp_get_post_terms($id, 'events_location', ['fields' => 'id=>name']);
                         if( is_array($location_terms) && $location_terms ) {
                             foreach($location_terms as $term_id => $term_name) {
-                                $term_meta              = get_term_meta($term_id, 'wfe_location_meta', true);
+                                $term_meta              = maybe_unserialize( get_term_meta($term_id, 'wfe_location_meta', true) );
                                 $locations[$term_id]    = [
                                     'icon' => isset($term_meta['location_icon']) ? $term_meta['location_icon']: '',
                                     'name' => esc_html($term_name)
@@ -169,6 +170,7 @@ class Map extends Component {
                 center: ' . json_encode($this->params['center']) . ',
                 cluster: "' . $this->params['cluster'] . '",
                 clusterIconPath: "' . $this->params['clusterip'] . '",
+                clusterGridSize: "' . $this->params['clustersize'] . '",
                 fit: ' . json_encode($this->params['fit']) . ',
                 markers: ' . json_encode($this->params['markers']) . ', 
                 styles: ' . $styles . ',
