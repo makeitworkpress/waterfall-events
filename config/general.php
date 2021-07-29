@@ -25,7 +25,7 @@ $configurations = [
         ['handle' => 'wfe-admin-scripts', 'src' => WFE_URI . 'assets/js/wfe-admin.js',  'deps' => ['wp-editor'], 'context' => 'block-editor']
     ],
     'register' => [
-        'postTypes' => [
+        'post_types' => [
             [
                 'name'      => 'events',
                 'plural'    => __( 'Events', 'wfe' ),

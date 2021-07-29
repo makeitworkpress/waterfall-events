@@ -25,7 +25,7 @@ abstract class Component {
      * Contains the template
      * @access protected
      */
-    protected $template = '';    
+    protected $template = '';
     
     /**
      * Set up our parameters and component
