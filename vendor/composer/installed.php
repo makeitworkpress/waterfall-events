@@ -6,7 +6,7 @@
     'aliases' => 
     array (
     ),
-    'reference' => '3247058116f7b57b48f5cab5613ab1ba82f616f8',
+    'reference' => '66d76b6f1bd11e20be35d8b258b6c7a3753e68b4',
     'name' => 'makeitworkpress/waterfall-events',
   ),
   'versions' => 
@@ -18,7 +18,7 @@
       'aliases' => 
       array (
       ),
-      'reference' => '3247058116f7b57b48f5cab5613ab1ba82f616f8',
+      'reference' => '66d76b6f1bd11e20be35d8b258b6c7a3753e68b4',
     ),
     'makeitworkpress/wp-updater' => 
     array (
@@ -28,7 +28,7 @@
       array (
         0 => '9999999-dev',
       ),
-      'reference' => '25071e421abd240bf411289a34f982f1bd5d796c',
+      'reference' => '61eee29ae99aeae9b8cfac90839b333815da1f46',
     ),
   ),
 );

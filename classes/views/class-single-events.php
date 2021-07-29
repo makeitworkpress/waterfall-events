@@ -15,8 +15,8 @@ class Single_Events extends \Waterfall_Events\Base {
         $this->defaults = [];
 
         $this->actions = [  
-            ['components_content_before', 'renderSummary'],
-            ['components_content_after', 'renderDetails'] 
+            ['components_content_before', 'render_summary'],
+            ['components_content_after', 'render_details'] 
         ];
 
         $this->filters = [];
@@ -26,7 +26,7 @@ class Single_Events extends \Waterfall_Events\Base {
     /**
      * Render summary (description + registration button)
      */
-    public function renderSummary() {
+    public function render_summary() {
         
         global $post;
 
@@ -41,7 +41,7 @@ class Single_Events extends \Waterfall_Events\Base {
     /**
      * Render details
      */
-    public function renderDetails() {
+    public function render_details() {
 
         global $post;
 

@@ -29,7 +29,7 @@ class Events extends \Waterfall_Events\Base {
      * so they are recognized by gutenberg and we can modify the values in JavaScript accordingly
      * 
      * @param WP_REST_Server $wp_rest_server The WP Rest Server object
-     * @return WP_REST_Server $wp_rest_server The WP Rest s]server object
+     * @return WP_REST_Server $wp_rest_server The WP Rest Server object
      */
     public function register_event_sync_meta( $wp_rest_server ) {
 

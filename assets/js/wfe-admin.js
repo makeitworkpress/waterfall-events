@@ -48,7 +48,7 @@
                                 continue;
                             }
 
-                            // First, add a new option to the select field and trigger the value change
+                            // First, add a new option to the select field and then trigger the value change
                             syncEventSelectField.innerHTML = '<option value="' + updatedMeta[property] + '">' + postTitle + '</option>' + syncEventSelectField.innerHTML;
                             syncEventSelectField.value = updatedMeta[property];
                             jQuery('#' + property).val(updatedMeta[property]).trigger('change');
