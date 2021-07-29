@@ -3,7 +3,7 @@
 Plugin Name:  Waterfall Events
 Plugin URI:   https://www.makeitwork.press/wordpress-plugins/waterfall-events/
 Description:  The Waterfall Events plugin upgradres your Waterfall WordPress theme with event capabilities.
-Version:      0.0.5
+Version:      0.0.6
 Author:       Make it WorkPress
 Author URI:   https://makeitwork.press/
 License:      GPL3

@@ -5,7 +5,7 @@
 defined( 'ABSPATH' ) or die('Go eat veggies!');
 
 // Custom meta for the events post type
-$eventMeta  = [
+$event_meta  = [
     'frame'     => 'meta',
     'fields'    => [
         'context'   => 'normal',
@@ -214,7 +214,7 @@ $eventMeta  = [
 
 // If we have a multisite, additional advanced settings are added to the events post type
 if( is_multisite() ) {
-    $eventMeta['fields']['sections']['advanced']['fields'][] = [];
+    $event_meta['fields']['sections']['advanced']['fields'][] = [];
 
     $current    = get_current_blog_id();
     $sites      = get_sites(['site__not_in' => [$current]]);
@@ -223,7 +223,7 @@ if( is_multisite() ) {
 
         foreach( $sites as $site ) {
                 
-            $eventMeta['fields']['sections']['advanced']['fields'][] = [
+            $event_meta['fields']['sections']['advanced']['fields'][] = [
                 'columns'       => 'half',
                 'id'            => 'wfe_event_sync_' . $site->blog_id,
                 'description'   => __('This will synchronizing this event to another event at the given site. It will not synchronize taxonomies, such as Event Categories', 'wfe'),
@@ -253,7 +253,7 @@ if( is_multisite() ) {
                 wp_cache_set( md5($site->blog_id . '_wfe_event_sync'), $options, '', 3600);
             }
 
-            $eventMeta['fields']['sections']['advanced']['fields'][] = [
+            $event_meta['fields']['sections']['advanced']['fields'][] = [
                 'columns'       => 'half',
                 'id'            => 'wfe_event_sync_target_' . $site->blog_id,
                 'description'   => __('This will sync the event from this site to the target. If you leave this empty, it will automatically setup a new event at the given site', 'wfe'),
@@ -273,7 +273,7 @@ if( is_multisite() ) {
 /**
  * Custom meta fields for th organizer taxonomy
  */
-$organizerMeta  = [
+$organizer_meta  = [
     'frame'     => 'meta',
     'fields'    => [
         'id'        => 'wfe_organizer_meta',
@@ -319,7 +319,7 @@ $organizerMeta  = [
 /**
  * Custom meta fields for the location taxonomy
  */
-$locationMeta  = [
+$location_meta  = [
     'frame'     => 'meta',
     'fields'    => [
         'id'        => 'wfe_location_meta',

@@ -109,10 +109,10 @@ class Plugin {
             require_once( WFE_PATH . '/config/meta.php' );
             require_once( WFE_PATH . '/config/options.php' );
 
-            $configurations['options']['eventMeta']     = $eventMeta;
-            $configurations['options']['organizerMeta'] = $organizerMeta;
-            $configurations['options']['locationMeta']  = $locationMeta;
-            $configurations['options']['options']       = $options;
+            $configurations['options']['event_meta']     = $event_meta;
+            $configurations['options']['organizer_meta'] = $organizer_meta;
+            $configurations['options']['location_meta']  = $location_meta;
+            $configurations['options']['options']        = $options;
 
         }
 
