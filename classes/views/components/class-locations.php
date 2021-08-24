@@ -1,6 +1,6 @@
 <?php
 /**
- * Displays the summary of a single review, including advantages and disadvantages
+ * Displays the location(s) for an event
  */
 namespace Waterfall_Events\Views\Components;
 

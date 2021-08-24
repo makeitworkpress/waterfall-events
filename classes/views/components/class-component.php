@@ -71,7 +71,7 @@ abstract class Component {
     /**
      * Renders a component
      * 
-     * @param boolean   $render  If we return the given template instead of rendering it
+     * @param boolean   $render  If set to false, returns the given template
      */
     public function render( $render = true ) {
 

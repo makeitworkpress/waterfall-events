@@ -120,9 +120,9 @@ class Plugin {
         if( is_customize_preview() ) {
 
             // require_once( WFE_PATH . '/config/customizer.php' );
-            // $configurations['options']['colorsPanel']       = $colorsPanel;
-            // $configurations['options']['layoutPanel']       = $layoutPanel;
-            // $configurations['options']['typographyPanel']   = $typographyPanel;
+            // $configurations['options']['colors_panel']       = $colors_panel;
+            // $configurations['options']['layout_panel']       = $layout_panel;
+            // $configurations['options']['typography_panel']   = $typography_panel;
 
         }
 

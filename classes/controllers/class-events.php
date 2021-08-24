@@ -1,7 +1,7 @@
 <?php
 /**
  * This class controls how data moves in and out from events
- * While technically not really a controller (more or less a model/controller crossover), it is named as such
+ * While technically not really a controller, it is named as such
  */
 namespace Waterfall_Events\Controllers;
 

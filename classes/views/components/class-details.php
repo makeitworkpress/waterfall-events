@@ -1,6 +1,6 @@
 <?php
 /**
- * Displays the details for an event
+ * Displays the details for a single event
  */
 namespace Waterfall_Events\Views\Components;
 use WP_Post as WP_Post;
@@ -15,6 +15,7 @@ class Details extends Component {
         $this->params = wp_parse_args( $this->params, [
             'categories'        => true,
             'categories_title'  => __('Event Category', 'wfe'),
+            'class'             => 'wfe-card', // Optional display class
             'dates'             => true,
             'dates_title'       => __('Event Date', 'wfe'),  
             'post_id'           => 0, // POST ID                  
@@ -26,6 +27,7 @@ class Details extends Component {
             'tags'              => true,
             'tags_title'        => __('Event Tags', 'wfe'),
             'title'             => __('Details', 'wfe'),
+            'titles'            => true, // Show titles or not
             'website'           => true,
             'website_title'     => __('Event Website', 'wfe')
         ] );
@@ -46,10 +48,17 @@ class Details extends Component {
         $taxonomies;
 
         /**
+         * Additional class
+         */
+        $this->props['class']   = $this->params['class'];
+
+        /**
          * Default titles
          */
-        foreach( ['dates_title', 'price_title', 'register_title', 'title', 'website_title'] as $prop ) {
-            $this->props[$prop ]   = $this->params[$prop];  
+        if( $this->params['titles'] ) {
+            foreach( ['dates_title', 'price_title', 'register_title', 'title', 'website_title'] as $prop ) {
+                $this->props[$prop]   = $this->params[$prop];  
+            }
         }
 
         /**
@@ -87,9 +96,8 @@ class Details extends Component {
         if( $this->params['categories'] ) {
             $taxonomies['events_category'] = [
                 'after'     => '', 
-                'before'    => 
-                '<h3>' . $this->params['categories_title'] . '</h3><i class="fa fa-certificate"></i>', 
-                'icon'      => false, 
+                'before'    => $this->params['titles'] ?'<h3>' . $this->params['categories_title'] . '</h3>' : '', 
+                'icon'      => '',
                 'schema'    => '', 
                 'seperator' => ', '
             ]; 
@@ -98,13 +106,12 @@ class Details extends Component {
         if( $this->params['tags'] ) {
             $taxonomies['events_tag'] = [
                 'after'     => '', 
-                'before'    => 
-                '<h3>' . $this->params['tags_title'] . '</h3><i class="fa fa-tags"></i>', 
-                'icon'      => false, 
+                'before'    => $this->params['titles'] ? '<h3>' . $this->params['tags_title'] . '</h3>' : '', 
+                'icon'      => '',
                 'schema'    => '', 
                 'seperator' => ', '
             ]; 
-        }        
+        }
 
         if( isset($taxonomies) && $taxonomies ) {
             $this->props['terms'] = wpc_atom('termlist', ['taxonomies' => $taxonomies], false);
