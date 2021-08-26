@@ -2,11 +2,12 @@
  * All modules are bundled into one application
  */
 import map from './modules/map';
+import calendar from './modules/calendar';
 import mapElementor from './modules/map-elementor';
 
 const App = {
     components: {
-        map, mapElementor
+        calendar, calendarElementor, map, mapElementor
     },     
     initialize: function() {
         for( let key in this.components ) {

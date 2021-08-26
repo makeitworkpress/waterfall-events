@@ -16,8 +16,8 @@ class Map extends Elementor\Widget_Base {
 	 * @return array Script handles
 	 */		
 	public function get_script_depends() {
-        return ['google-maps-js', 'wfe-markercluster', 'wfe-scripts'];
-    }  	
+    return ['google-maps-js', 'wfe-markercluster', 'wfe-scripts'];
+	}   	
 
 	/**
 	 * Retrieves the name for the widget
@@ -34,7 +34,7 @@ class Map extends Elementor\Widget_Base {
 	 * @return string Widget title
 	 */
 	public function get_title() {
-		return __( 'Events Map', 'wfr' );
+		return __( 'Events Map', 'wfe' );
     }
     
     /**
@@ -194,7 +194,7 @@ class Map extends Elementor\Widget_Base {
 		$this->add_control(
 			'height',
 			[
-				'label' 		=> __( 'Map Height', 'waterfall' ),
+				'label' 		=> __( 'Map Height', 'wfe' ),
 				'type' 			=> Controls_Manager::SLIDER,
 				'range' => ['px' => ['min' => 0, 'max' => 1000]],
 				'selectors' 	=> [
@@ -206,7 +206,7 @@ class Map extends Elementor\Widget_Base {
 		$this->add_control(
 			'border_radius',
 			[
-				'label' 		=> __( 'Map Border Radius', 'waterfall' ),
+				'label' 		=> __( 'Map Border Radius', 'wfe' ),
 				'type' 			=> Controls_Manager::DIMENSIONS,
 				'size_units' 	=> [ 'px', '%' ],
 				'selectors' 	=> [

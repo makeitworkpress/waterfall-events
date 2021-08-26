@@ -6,7 +6,8 @@ defined( 'ABSPATH' ) or die( 'Go eat veggies!' );
 
 $configurations = [
     'elementor' => [
-        'Waterfall_Events\Views\Elementor\Map'
+        'Waterfall_Events\Views\Elementor\Map',
+        'Waterfall_Events\Views\Elementor\Events'
     ],
     'enqueue'   => [
         ['handle' => 'wfe-style', 'src' => WFE_URI . 'assets/css/waterfall-events.min.css'], 
@@ -22,6 +23,9 @@ $configurations = [
             'src'       => WFE_URI . 'assets/js/wfe.js',
         ],
         ['handle' => 'wfe-markercluster', 'src' => 'https://unpkg.com/@googlemaps/markerclustererplus/dist/index.min.js', 'action' => 'register'],
+        ['handle' => 'wfe-fullcalendar', 'src' => WFE_URI . 'assets/vendor/fullcalendar/main.min.js', 'action' => 'register'],
+        ['handle' => 'wfe-fullcalendar-locales', 'src' => WFE_URI . 'assets/vendor/fullcalendar/locales-all.min.js', 'action' => 'register'],
+        ['handle' => 'wfe-fullcalendar-css', 'src' => WFE_URI . 'assets/vendor/fullcalendar/main.min.css'],
         ['handle' => 'wfe-admin-scripts', 'src' => WFE_URI . 'assets/js/wfe-admin.js',  'deps' => ['wp-editor'], 'context' => 'block-editor']
     ],
     'register' => [

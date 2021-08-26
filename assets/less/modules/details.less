@@ -23,6 +23,18 @@
         color: @meta;
         .wfe-icon();
     }
+    .entry-events_category, .entry-events_tag {
+        &:before {
+            font-family: 'FontAwesome';
+            .wfe-icon();
+        }
+    }
+    .entry-events_category:before {
+        content: "\f192";
+    }
+    .entry-events_tag:before {
+        content: "\f02c";  
+    }    
     .atom-termlist-item:first-child {
         margin-bottom: @grid-space*0.5;   
     } 

@@ -3,7 +3,7 @@
  * Template for the details components
  */
 defined( 'ABSPATH' ) or die( 'Go eat veggies!' ); 
-if( ! $dates && ! $price && ! $terms && ! $website && ! isset($register) ) {
+if( ! $dates && ! $price && ! $terms && ! $website && ! $register ) {
     return;
 } ?>
 <div class="wfe-details wfe-single-info <?php echo $class; ?>">

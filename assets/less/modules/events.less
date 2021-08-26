@@ -1,0 +1,42 @@
+// main: ../waterfall-events.less
+.wfe-events {
+  &.molecule-posts-list .molecule-post {
+    .entry-image {
+      margin-bottom: 1.5rem !important;  
+      &.components-right-float {
+        margin-left: 16px !important;
+      }
+      &.components-right-float {
+        margin-right: 16px !important;
+      } 
+      img {
+        margin-bottom: 0;
+      }         
+    }    
+  }
+  .entry-footer {
+    align-items: baseline;
+    display: flex;
+    font-size: .8em;
+  }
+  .wfe-events-item-location {
+    margin: 0 @grid-space*0.5 @grid-space*0.25 0;  
+    i {
+      .wfe-icon();
+    }
+  }
+  .wfe-details-items {
+    align-items: baseline;
+    .wfe-details-item {
+      margin: 0 @grid-space*0.5 @grid-space*0.25 0;
+      width: auto;
+      .wfe-dates {
+        font-size: 1em;
+        margin-bottom: 0;
+      }
+      .wfe-registration-btn {
+        padding: 8px 16px;
+      }
+    } 
+  } 
+}

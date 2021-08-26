@@ -11,7 +11,10 @@ class Dates extends Component {
 
     protected function initialize() {
 
-        $this->params = wp_parse_args( $this->params, ['id' => 0, 'separator' => '-'] );
+        $this->params = wp_parse_args( $this->params, [
+            'id'        => 0, 
+            'separator' => '-'
+        ] );
 
     }
 

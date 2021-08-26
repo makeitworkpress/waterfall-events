@@ -48,9 +48,16 @@ class Details extends Component {
         $taxonomies;
 
         /**
-         * Additional class
+         * Default props
          */
-        $this->props['class']   = $this->params['class'];
+        $this->props    = [
+            'class'     => $this->params['class'],
+            'dates'     => false, 
+            'price'     => false,  
+            'terms'     => false,  
+            'website'   => false, 
+            'register'  => false
+        ];
 
         /**
          * Default titles
@@ -96,7 +103,7 @@ class Details extends Component {
         if( $this->params['categories'] ) {
             $taxonomies['events_category'] = [
                 'after'     => '', 
-                'before'    => $this->params['titles'] ?'<h3>' . $this->params['categories_title'] . '</h3>' : '', 
+                'before'    => $this->params['titles'] ? '<h3>' . $this->params['categories_title'] . '</h3>' : '', 
                 'icon'      => '',
                 'schema'    => '', 
                 'seperator' => ', '
