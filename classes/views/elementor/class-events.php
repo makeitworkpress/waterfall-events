@@ -274,7 +274,7 @@ class Events extends Elementor\Widget_Base {
         'types'     => ['classic', 'gradient'],
 				'selector'  => '{{WRAPPER}} .wfe-events .molecule-post'	
 			]
-		);      
+		);  
 
 		$this->add_control(
 			'event_height',
@@ -284,7 +284,8 @@ class Events extends Elementor\Widget_Base {
 				'range'     => ['px' => ['min' => 0, 'max' => 1000]],
 				'selector' 	=> [
 					'{{WRAPPER}} .wfe-events .molecule-post' => 'min-height: {{SIZE}}{{UNIT}};',
-				]		
+				],
+				'separator' => 'before'		
 			]
 		);
     
@@ -295,7 +296,8 @@ class Events extends Elementor\Widget_Base {
 				'type' 			=> Controls_Manager::DIMENSIONS,
 				'selectors' => [
 					'{{WRAPPER}} .wfe-events .molecule-post' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-				]		
+				],
+				'separator' => 'before'		
 			]
 		);    
     
@@ -319,6 +321,15 @@ class Events extends Elementor\Widget_Base {
 				]		
 			]
 		);
+
+		$this->add_group_control(
+			\Elementor\Group_Control_Box_Shadow::get_type(),
+			[
+				'name' 			=> 'event_box_shadow',
+				'label' 		=> __( 'Event Box Shadow', 'wfe' ),
+				'selector' 	=> '{{WRAPPER}} .wfe-events .molecule-post'
+			]
+		);				
 
     $this->end_controls_section();
     
@@ -472,7 +483,18 @@ class Events extends Elementor\Widget_Base {
 					'{{WRAPPER}} .wfe-events .entry-footer a' => 'color: {{VALUE}};',
 				],
 			]
-		);    
+		); 
+		
+		$this->add_control(
+			'details_icon_color',
+			[
+				'label'     => __( 'Details Icon Color', 'plugin-domain' ),
+				'type'      => \Elementor\Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .wfe-events .entry-footer i' => 'color: {{VALUE}};',
+				],
+			]
+		);  		
     
 		$this->add_group_control(
 			\Elementor\Group_Control_Typography::get_type(),
