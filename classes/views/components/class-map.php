@@ -156,12 +156,12 @@ class Map extends Component {
         /**
          * Adds the map settings to the footer as a script. This allows the general JS to pickup these settings and create a custom map
          */
-        add_action('wp_footer', [$this, 'echoConfigJS']);
+        add_action('wp_footer', [$this, 'echo_config_JS']);
 
     }
 
     // Echo our custom variables
-    public function echoConfigJS() {
+    public function echo_config_JS() {
 
         $styles = $this->params['styles'] ? $this->params['styles'] : "[]";
 

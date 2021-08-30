@@ -258,11 +258,11 @@ class Map extends Elementor\Widget_Base {
 		$map->render();
 
 		// Adds the script tags to expose our configurations to elementor
-		if( (isset($_GET['action']) && $_GET['action'] == 'elementor') || (isset($_REQUEST['action']) && $_REQUEST['action'] == 'elementor_ajax') ) {
-			$map->echoConfigJS();
+		if( \Waterfall_Events\Helper::is_elementor_editor() ) {
+			$map->echo_config_JS();
 		}
     
-    }
+  }
 
 	/**
 	 * Render output in the editor.

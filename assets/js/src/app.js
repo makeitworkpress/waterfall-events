@@ -3,6 +3,7 @@
  */
 import map from './modules/map';
 import calendar from './modules/calendar';
+import calendarElementor from './modules/calendar-elementor';
 import mapElementor from './modules/map-elementor';
 
 const App = {
