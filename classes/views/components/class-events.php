@@ -31,6 +31,7 @@ class Events extends Component {
           'query'         => null,        // Accepts a WP_Query object or an array of query_args
           'register'      => false,       // Show the registration button for an event
           'schema'        => true,        // If enabled, adds microdata
+          'sort'          => '',          // Sort by post_date, event_date or title
           'tags'          => false,       // Show the event tag
           'title_tag'     => 'h3',        // The tag used for the title
           'view'          => 'list'       // List or grid display
@@ -52,6 +53,23 @@ class Events extends Component {
           'post_status'     => 'publish',
           'post_type'       => 'events',
         ];  
+      }
+
+      if( $this->params['sort'] && ! isset($this->params['query']['orderby']) ) {
+        switch($this->params['sort']) {
+          case 'post_date':
+            $this->params['query']['orderby'] = 'date';
+            break;
+          case 'event_date':
+            $this->params['query']['order'] = 'ASC';
+            $this->params['query']['meta_key'] = 'wfe_sort_date';
+            $this->params['query']['orderby'] = 'meta_value_num';
+            break;
+          case 'title':
+            $this->params['query']['order'] = 'ASC';
+            $this->params['query']['orderby'] = 'title';
+            break;
+        }
       }
 
       $this->props = [

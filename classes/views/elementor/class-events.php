@@ -28,7 +28,7 @@ class Events extends Elementor\Widget_Base {
 		return __( 'Events List', 'wfe' );
     }
     
-    /**
+  /**
 	 * Name for the icon used
 	 *
 	 * @return string Widget icon
@@ -36,9 +36,8 @@ class Events extends Elementor\Widget_Base {
 	public function get_icon() {
 		return 'eicon-post-list';
 	}
-
     
-    /**
+  /**
 	 * Name for the category used
 	 *
 	 * @return string Category name
@@ -214,7 +213,6 @@ class Events extends Elementor\Widget_Base {
       ]
 		);
 
-    // @todo Add sort by event date or 
 		$this->add_control(
 			'posts_per_page',
 			[
@@ -236,7 +234,22 @@ class Events extends Elementor\Widget_Base {
 				'label_off' 	  => __( 'No', 'wfe' ),
 				'separator' 	  => 'before'
 			]
-		);    
+		); 
+		
+		$this->add_control(
+			'sort',
+			[
+				'label'     	  => __( 'Sort', 'wfe' ),
+				'description'   => __( 'The sorting of events in the list.', 'wfe' ),
+				'type'      	  => Controls_Manager::SELECT,
+				'default'   	  => 'event_date',
+				'options'  	    => [
+          'event_date' 		=> __('By Event Date', 'wfe'),
+          'post_date' 		=> __('By Publication Date', 'wfe'),
+          'title' 				=> __('By Event Title', 'wfe')
+        ]
+			]
+		);		
 		
 		$this->end_controls_section();
 
@@ -536,6 +549,7 @@ class Events extends Elementor\Widget_Base {
         'post_type'       => 'events'
       ],        
       'register'      => $settings['register'], 
+			'sort'					=> $settings['sort'],
       'tags'          => $settings['tags'],
       'title_tag'     => $settings['title_tag'],
       'view'          => $settings['view']

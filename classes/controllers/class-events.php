@@ -92,10 +92,27 @@ class Events extends \Waterfall_Events\Base {
         }
 
         /**
+         * Update our current event date with a meta value we can use for sorting in our archives
+         */
+        $multiple_dates     = get_post_meta($id, 'wfe_multiday_date', true);
+        $sort_date          = get_post_meta($id, 'wfe_sort_date', true);
+
+        if( isset($multiple_dates[0]['date']) && is_numeric($multiple_dates[0]['date']) ) {
+            if( $sort_date !== $multiple_dates[0]['date'] ) {
+                update_post_meta( $id, 'wfe_sort_date', $multiple_dates[0]['date'] );
+            }
+        } else {
+            $single_date    = get_post_meta($id, 'wfe_startdate', true);
+            if( $sort_date !== $single_date && is_numeric($single_date) ) {
+                update_post_meta( $id, 'wfe_sort_date', $single_date );
+            }
+        }
+
+        /**
          * Get the information at the existing event
          */
 
-        // Featured and marker images (@todo - custom background image from Waterfall Meta)
+        // Featured and marker images (@todo Background image for Waterfall Meta)
         $featured_image     = $this->get_attachment_data( get_post_meta($id, '_thumbnail_id', true) );   
         $marker_image       = $this->get_attachment_data( rtrim( get_post_meta($id, 'wfe_location_icon', true), ',') );
 
