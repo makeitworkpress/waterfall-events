@@ -20,7 +20,7 @@ class Events extends \Waterfall_Events\Base {
     protected function register() {
         $this->actions = [
             ['rest_api_init', 'register_event_sync_meta'],
-            ['save_post', 'sync_events', 15, 2]
+            ['save_post', 'sync_save_events', 15, 2]
         ];
     }
 
@@ -59,18 +59,64 @@ class Events extends \Waterfall_Events\Base {
     }
 
     /**
-     * Syncs an event to other events in the multisite network
+     * Saves the starting timestamp for an event, so it can be sorted
      * 
      * @param Int $id The post ID for the post saved.
-     * @param WP_Post $post The post of the post saved.
      */
-    public function sync_events( $id, $post ) {
+    public function save_event_sort_date( $id ) {
 
-        // The installation should be a multisite
-        if( ! is_multisite() ) {
+        if( ! $id ) {
             return;
         }
 
+        $event_type = get_post_meta($id, 'wfe_type', true);
+
+        if( $event_type === 'multiday' ) {
+            $event_days = get_post_meta($id, 'wfe_multiday_date', true);  
+            
+            if( isset($event_days[0]['date']) && $event_days[0]['date'] ) {
+                $start_date_time = [
+                    'date' => $event_days[0]['date'],
+                    'time' => $event_days[0]['starttime']
+                ];
+            }
+        } else {
+            $start_date_time = [
+                'date' => get_post_meta($id, 'wfe_startdate', true),
+                'time' => get_post_meta($id, 'wfe_starttime', true)
+            ];
+        }  
+
+        if( isset($start_date_time) && $start_date_time['date'] ) {
+
+            $sort_date  = (int) get_post_meta($id, 'wfe_sort_date', true);
+            $start_date_timestamp = intval($start_date_time['date']);
+
+            if( $start_date_time['time'] && preg_match('/\d{2}:\d{2}/', $start_date_time['time']) ) {
+                $start_date_time_hours_minutes = explode(':', $start_date_time['time']);
+                $start_date_timestamp += ($start_date_time_hours_minutes[0] * 3600) + ($start_date_time_hours_minutes[1] * 60);
+            }
+        
+            if( $sort_date !== $start_date_timestamp ) {
+                update_post_meta( $id, 'wfe_sort_date', $start_date_timestamp );
+            }
+
+        }
+
+    }
+
+    /**
+     * Syncs an event to other events in the multisite network
+     * Saves the data of an event for dates with multiple dates
+     * 
+     * @param Int $id The post ID for the post saved.
+     * @param WP_Post $post The post object of the post saved.
+     */
+    public function sync_save_events( $id, $post ) {
+
+        /**
+         * Permissions
+         */
         // Do not save on autosaves
         if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
             return; 
@@ -84,28 +130,26 @@ class Events extends \Waterfall_Events\Base {
         // Should be the events post type
         if( $post->post_type != 'events' ) {
             return;
+        } 
+        
+        /**
+         * Saving a starting post date for multiday events
+         * This is used for event sorting
+         */
+        $this->save_event_sort_date($id);
+
+        /**
+         * The syncing part
+         */
+
+        // The installation should be a multisite
+        if( ! is_multisite() ) {
+            return;
         }
 
         // Fix infite loop if sites are synced to each other; if we're syncing we can only do this action once.
         if( $this->syncing ) {
             return;
-        }
-
-        /**
-         * Update our current event date with a meta value we can use for sorting in our archives
-         */
-        $multiple_dates     = get_post_meta($id, 'wfe_multiday_date', true);
-        $sort_date          = get_post_meta($id, 'wfe_sort_date', true);
-
-        if( isset($multiple_dates[0]['date']) && is_numeric($multiple_dates[0]['date']) ) {
-            if( $sort_date !== $multiple_dates[0]['date'] ) {
-                update_post_meta( $id, 'wfe_sort_date', $multiple_dates[0]['date'] );
-            }
-        } else {
-            $single_date    = get_post_meta($id, 'wfe_startdate', true);
-            if( $sort_date !== $single_date && is_numeric($single_date) ) {
-                update_post_meta( $id, 'wfe_sort_date', $single_date );
-            }
         }
 
         /**

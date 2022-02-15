@@ -189,6 +189,7 @@ class Calendar extends Elementor\Widget_Base {
 				'type'      => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .fc-toolbar .fc-button-primary:hover' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .fc-toolbar .fc-button-primary.fc-button-active' => 'color: {{VALUE}};'
 				]
 			]
 		);
@@ -200,6 +201,7 @@ class Calendar extends Elementor\Widget_Base {
 				'type'      => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .fc-toolbar .fc-button-primary:hover' => 'background-color: {{VALUE}};',
+					'{{WRAPPER}} .fc-toolbar .fc-button-primary.fc-button-active' => 'background-color: {{VALUE}};',
 				],
         'separator' 	  => 'before'
 			]
@@ -212,6 +214,7 @@ class Calendar extends Elementor\Widget_Base {
 				'type'      => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .fc-toolbar .fc-button-primary:hover' => 'border-color: {{VALUE}};',
+					'{{WRAPPER}} .fc-toolbar .fc-button-primary.fc-button-active' => 'border-color: {{VALUE}};'
 				]
 			]
 		); 		

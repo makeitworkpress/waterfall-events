@@ -5,11 +5,17 @@
  * Otherwise, for each save action a new event is created and the database gets messed up quickly...
  */
 (function () {
-    const { getEditedPostAttribute, isSavingPost, getCurrentPostId } = wp.data.select( 'core/editor' );
+    const { getEditedPostAttribute, isSavingPost, getCurrentPostId, getCurrentPostType } = wp.data.select( 'core/editor' );
     let updatedMeta = {};
     let wasSaving   = false;
 
+
     wp.data.subscribe( () => {
+
+        // Only applies to events
+        if( getCurrentPostType !== 'events' ) {
+            return;
+        }        
 
         if( isSavingPost() ) {
             wasSaving = true;
