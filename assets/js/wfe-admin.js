@@ -40,7 +40,7 @@
                         updatedMeta = post.meta;
 
                         // Look in our updated meta and change the select field accordingly
-                        for( property in updatedMeta ) {
+                        for( let property in updatedMeta ) {
                             
                             // Only consider our sync targets
                             if( property.indexOf('wfe_event_sync_target_') === false ) {

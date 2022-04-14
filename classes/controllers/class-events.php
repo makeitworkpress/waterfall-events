@@ -203,8 +203,6 @@ class Events extends \Waterfall_Events\Base {
                 'post_type'     => $post->post_type
             ]);
 
-            // wp_die( var_dump($meta) );
-
             // Update our metadata
             foreach( $meta as $key => $values) {
                 
