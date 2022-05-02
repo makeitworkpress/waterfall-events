@@ -251,6 +251,8 @@ class Events extends \Waterfall_Events\Base {
 
     /**
      * Retrieves relevant attachment data, such as filesize, url and path.
+     * ! @todo  This doesn't work properly if an attachment does not exist on the target site; because the function is executed on the switched blog; 
+     * !        thus attached files are also loaded from the given target site instead of the main site
      *  
      * @param Int $attachment_id The ID for the attachment
      * @return Boolean|Array $data The attachment data 
