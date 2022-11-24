@@ -81,7 +81,7 @@ class Events extends Component {
         'pagination'      => $this->params['pagination'] ? ['type' => 'numbers'] : false,
         'post_properties' => [
           'attributes'      => [
-            'itemtype'        => is_array($no_schema) && in_array($type, $no_schema) ? '' : 'http://schema.org/Event', 
+            'itemtype'        => is_array($no_schema) && in_array('events', $no_schema) ? '' : 'http://schema.org/Event', 
             'style'           => [
               'min-height'    => $this->params['height'] ? $this->layout['height'] . 'px' : ''
             ]

@@ -40,6 +40,7 @@ $configurations = [
                 'singular'  => __( 'Event', 'wfe' ),
                 'args'      => [
                     'menu_icon'     => 'dashicons-calendar', 
+                    'menu_position' => 20,
                     'has_archive'   => true,
                     'hierarchical'  => true,
                     'show_in_rest'  => true,

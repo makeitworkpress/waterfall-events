@@ -22,7 +22,7 @@ $options = [
                     ],
                     [
                         'columns'       => 'half',
-                        'description'   => __('Full path to cluster icons. Icons in here should be named m1.png, m2.png, m3.png, m4.png, m5.png.', 'wfe'),
+                        'description'   => __('Full path to cluster icons for use in event maps. Icons in here should be named m1.png, m2.png, m3.png, m4.png, m5.png.', 'wfe'),
                         'id'            => 'events_cluster_icon_path',
                         'title'         => __('Cluster Icons Custom Path', 'wfe'),
                         'type'          => 'input',                        
@@ -33,3 +33,30 @@ $options = [
         ]                    
     ]
 ];
+
+if( is_super_admin() && is_multisite() ) {
+    $options['fields']['sections']['events_general']['fields'][] = [
+        'columns'       => 'half',
+        'id'            => 'events_enable_syncing',
+        'title'         => __('Enable Multisite Events Syncing', 'wfe'),                    
+        'description'   => __('Allows to sync events throughout sites, adding additional options in the "Advanced" tab when editing an event.', 'wfe'),
+        'type'          => 'checkbox',  
+        'single'        => true,                      
+        'style'         => 'switcher switcher-enable',
+        'options'       => [
+            'enable'        => ['label' => __('Enable Events Syncing', 'wfe')]
+        ]                        
+    ];  
+    $options['fields']['sections']['events_general']['fields'][] = [
+        'columns'       => 'half',
+        'id'            => 'events_calendar_multisite_source',
+        'title'         => __('Enable Multisite Events Calendar', 'wfe'),                    
+        'description'   => __('Allows to load all events from the whole multisite network in the events calendar.', 'wfe'),
+        'type'          => 'checkbox',  
+        'single'        => true,                      
+        'style'         => 'switcher switcher-enable',
+        'options'       => [
+            'enable'        => ['label' => __('Enable Multisite Events in Calendar', 'wfe')]
+        ]                        
+    ];    
+}

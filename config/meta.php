@@ -27,7 +27,7 @@ $event_meta  = [
                         'id'            => 'wfe_type',
                         'title'         => __('Type', 'wfe'),
                         'options'       => [
-                            'normal'    => __('Normal', 'wfe'),
+                            'normal'    => __('Regular', 'wfe'),
                             'multiday'  => __('Multi-day', 'wfe')
                         ],
                         'placeholder'   => __('Select a type', 'wfe'),
@@ -213,7 +213,9 @@ $event_meta  = [
 ];
 
 // If we have a multisite, additional advanced settings are added to the events post type
-if( is_multisite() ) {
+$wfe_events_syncing = wf_get_data('options', ['events_enable_syncing']);
+
+if( is_multisite() && $wfe_events_syncing['events_enable_syncing'] ) {
     $event_meta['fields']['sections']['advanced']['fields'][] = [];
 
     $current    = get_current_blog_id();
