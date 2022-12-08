@@ -1,11 +1,32 @@
 // main: ../waterfall-events.less
 .wfe-summary {
     margin-bottom: 1.5em;
-    .wfe-registration-btn {
-        margin-top: 1em;
-    }
 }
 
 .wfe-summary-description {
     font-size: 1.5em;
+}
+
+.wfe-summary-meta {
+    align-items: baseline;
+    display: flex;
+    margin-top: 1em;
+    .wfe-dates {
+        font-size: 1rem;
+        margin: 0;
+        li {
+            display: inline-block;
+            i {
+                display: none;
+            }
+        }
+        li ~ li > .wfe-dates-date:before {
+            content: ' - ';
+            margin: 0 0.25rem;   
+        }
+    }    
+    .wfe-registration-btn ~ .wfe-dates {
+        margin-left: 1rem;
+    }    
+
 }

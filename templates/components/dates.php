@@ -7,7 +7,7 @@ defined( 'ABSPATH' ) or die( 'Go eat veggies!' );
 if( ! $dates[0]['startDate'] ) {
     return;
 } ?>
-<ul class="wfe-dates">
+<ul class="wfe-dates <?php echo $class; ?>">
     <?php foreach( $dates as $date ) { ?>
         <li>
             <i class="fa fa-calendar"></i>

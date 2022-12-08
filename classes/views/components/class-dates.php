@@ -13,7 +13,8 @@ class Dates extends Component {
 
         $this->params = wp_parse_args( $this->params, [
             'id'        => 0, 
-            'separator' => '-'
+            'separator' => '-',
+            'summarize' => false, // Summarize multiday events
         ] );
 
     }
@@ -29,7 +30,8 @@ class Dates extends Component {
             $this->params['id'] = $post->ID;
         }
 
-        // Separator
+        // Separator and class
+        $this->props['class'] = $this->params['summarize'] ? 'wfe-dates-summarize' : 'wfe-dates-default';
         $this->props['separator'] = $this->params['separator'];
 
         // Retrieve dates
@@ -45,6 +47,15 @@ class Dates extends Component {
                         'startDate' => $date['date'] ? wp_date($format, $date['date']) : '',                      
                         'startTime' => $date['starttime'],
                         'title'     => $date['title']
+                    ];
+                }
+
+                // Summarizes a multiday event
+                $date_length = count($dates);
+                if( $this->params['summarize'] && $date_length > 1 ) {
+                    $this->props['dates'] = [
+                        $this->props['dates'][0],
+                        $this->props['dates'][($date_length - 1)]
                     ];
                 }
                 break;
