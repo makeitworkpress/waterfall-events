@@ -45,7 +45,6 @@ class Details extends Component {
             global $post;
             $id = $post->ID;
         }
-        $taxonomies;
 
         /**
          * Default props

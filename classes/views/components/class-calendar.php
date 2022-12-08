@@ -65,7 +65,6 @@ class Calendar extends Component {
 
     if( $this->params['source'] === 'network' ) {
       $current_site_id = get_current_blog_id();
-      $events = [];
 
       $sites = get_sites(['public' => 1, 'fields' => 'ids']);
 

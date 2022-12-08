@@ -23,6 +23,7 @@ $event_meta  = [
                 'fields'    => [
                     [
                         'columns'       => 'fourth',
+                        'default'       => 'normal',
                         'description'   => __('The type of event.', 'wfe.'),                        
                         'id'            => 'wfe_type',
                         'title'         => __('Type', 'wfe'),
@@ -55,50 +56,12 @@ $event_meta  = [
                         'title'         => __('Registration Label', 'wfe'),
                         'description'   => __('The text displayed in the registration button, defaults to "Register".', 'wfe.'),
                         'type'          => 'input'
-                    ],
-                    [
-                        'columns'       => 'fourth',
-                        'alt-format'    => 'j F Y',
-                        'description'   => __('The event starting date.', 'wfe.'),
-                        'dependency'    => ['source' => 'wfe_type', 'equation' => '!=', 'value' => 'multiday'],
-                        'id'            => 'wfe_startdate',
-                        'title'         => __('Starting Date', 'wfe'),
-                        'type'          => 'datepicker'
-                    ],
-                    [
-                        'class'         => 'medium-text',
-                        'columns'       => 'fourth',
-                        'description'   => __('The event starting time.', 'wfe.'),
-                        'dependency'    => ['source' => 'wfe_type', 'equation' => '!=', 'value' => 'multiday'],
-                        'id'            => 'wfe_starttime',
-                        'title'         => __('Starting Time', 'wfe'),
-                        'type'          => 'input',
-                        'subtype'       => 'time'
-                    ],  
-                    [
-                        'columns'       => 'fourth',
-                        'alt-format'    => 'j F Y',
-                        'description'   => __('The event ending date.', 'wfe.'),
-                        'dependency'    => ['source' => 'wfe_type', 'equation' => '!=', 'value' => 'multiday'],
-                        'id'            => 'wfe_enddate',
-                        'title'         => __('Ending Date', 'wfe'),
-                        'type'          => 'datepicker'
-                    ],
-                    [
-                        'class'         => 'medium-text',
-                        'columns'       => 'fourth',
-                        'description'   => __('The event ending time.', 'wfe.'),
-                        'dependency'    => ['source' => 'wfe_type', 'equation' => '!=', 'value' => 'multiday'],
-                        'id'            => 'wfe_endtime',
-                        'title'         => __('Ending Time', 'wfe'),
-                        'type'          => 'input',
-                        'subtype'       => 'time'
-                    ],                                                               
+                    ],                                                              
                     [
                         'description'   => __('Set-up multiple days and variable times for each day.', 'wfe.'),
                         'dependency'    => ['source' => 'wfe_type', 'equation' => '=', 'value' => 'multiday'],
                         'id'            => 'wfe_multiday_date',
-                        'title'         => __('Multiday Event', 'wfe'),
+                        'title'         => __('Multiday Event Times', 'wfe'),
                         'type'          => 'repeatable',
                         'fields'        => [
                             [
@@ -137,6 +100,40 @@ $event_meta  = [
                             ]  
                         ]
                     ], 
+                    [
+                        'columns'       => 'fourth',
+                        'alt-format'    => 'j F Y',
+                        'description'   => __('The regular event starting date.', 'wfe.'),
+                        'id'            => 'wfe_startdate',
+                        'title'         => __('Regular Starting Date', 'wfe'),
+                        'type'          => 'datepicker'
+                    ],
+                    [
+                        'class'         => 'medium-text',
+                        'columns'       => 'fourth',
+                        'description'   => __('The regular event starting time.', 'wfe.'),
+                        'id'            => 'wfe_starttime',
+                        'title'         => __('Regular Starting Time', 'wfe'),
+                        'type'          => 'input',
+                        'subtype'       => 'time'
+                    ],  
+                    [
+                        'columns'       => 'fourth',
+                        'alt-format'    => 'j F Y',
+                        'description'   => __('The regular event ending date.', 'wfe.'),
+                        'id'            => 'wfe_enddate',
+                        'title'         => __('Regular Ending Date', 'wfe'),
+                        'type'          => 'datepicker'
+                    ],
+                    [
+                        'class'         => 'medium-text',
+                        'columns'       => 'fourth',
+                        'description'   => __('The regular event ending time.', 'wfe.'),
+                        'id'            => 'wfe_endtime',
+                        'title'         => __('Regular Ending Time', 'wfe'),
+                        'type'          => 'input',
+                        'subtype'       => 'time'
+                    ],                    
                     [
                         'id'            => 'heading_other',
                         'title'         => __('Other details', 'wfe'),
