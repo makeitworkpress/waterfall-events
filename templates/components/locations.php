@@ -22,7 +22,7 @@ if( ! $locations ) {
                 <address class="wfe-location-address">
                     <?php if($location['street'] || $location['city'] || $location['country']) { ?>
                         <span class="wfe-location-meta">
-                            <i class="fa fa-map-marker"></i>
+                            <i class="fas fa-map-marker"></i>
                             <span class="wfe-location-address">
                                 <?php if( $location['street'] ) { ?>
                                     <span class="wfe-location-street"><?php echo $location['street'] . ' ' . $location['number']; ?></span>
@@ -37,10 +37,10 @@ if( ! $locations ) {
                             </span>                         
                         </span>
                     <?php } ?>
-                    <?php foreach(['email' => ['envelope-o', 'mailto:'], 'phone' => ['phone', 'tel:'], 'website' => ['link', '']] as $meta => $attr ) { ?>
+                    <?php foreach(['email' => ['envelope', 'mailto:'], 'phone' => ['phone', 'tel:'], 'website' => ['link', '']] as $meta => $attr ) { ?>
                         <?php if($location[$meta]) { ?>
                             <span class="wfe-location-meta">
-                                <i class="fa fa-<?php echo $attr[0]; ?>"></i>
+                                <i class="fas fa-<?php echo $attr[0]; ?>"></i>
                                 <a href="<?php echo $attr[1] . $location[$meta]; ?>" target="_blank"><?php echo $location[$meta]; ?></a>
                             </span>
                         <?php } ?>

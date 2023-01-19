@@ -186,8 +186,8 @@ export default {
         const infoWindow    = marker.infoWindow;
         const windowContent = `<div class="wfe-map-info-window">
             <h3><a href="${infoWindow.eventLink}" title="${infoWindow.title}">${infoWindow.title}</a></h3>
-            ${infoWindow.categories.length > 0 ? '<div class="wfe-map-info-window-meta"><i class="fa fa-certificate"></i>' + infoWindow.categories.join(', ') + '</div>' : ''}
-            ${infoWindow.tags.length > 0 ? '<div class="wfe-map-info-window-meta"><i class="fa fa-tags"></i>' + infoWindow.tags.join(', ') + '</div>' : ''}
+            ${infoWindow.categories.length > 0 ? '<div class="wfe-map-info-window-meta"><i class="fas fa-certificate"></i>' + infoWindow.categories.join(', ') + '</div>' : ''}
+            ${infoWindow.tags.length > 0 ? '<div class="wfe-map-info-window-meta"><i class="fas fa-tags"></i>' + infoWindow.tags.join(', ') + '</div>' : ''}
             ${infoWindow.description ? '<p class="wfe-map-info-window-description">' + infoWindow.description + '</p>' : ''}
             <ul class="wfe-map-info-window-dates">
                 ${infoWindow.dates.map( (date) => {
@@ -200,7 +200,7 @@ export default {
                     let endDate = date.endDate ? new Date(parseInt(date.endDate) * 1000) : false;
 
                     return `<li>
-                        <i class="fa fa-calendar"></i>
+                        <i class="far fa-calendar"></i>
                         ${date.title ? '<b>' + date.title + ':</b>': '' }
                         ${date.startDate}
                         ${date.startTime}
@@ -211,7 +211,7 @@ export default {
                 }).join('')}
             </ul>            
             <div class="wfe-map-info-window-locality">
-                <i class="fa fa-map-marker"></i>
+                <i class="fas fa-map-marker"></i>
                 ${infoWindow.locationName ? '<b>' + infoWindow.locationName + '</b>' : ''}
                 ${infoWindow.street} ${infoWindow.number} ${infoWindow.city} ${infoWindow.country ? '<span>' + infoWindow.country + '</span>' : ''}
             </div>

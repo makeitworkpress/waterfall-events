@@ -10,7 +10,7 @@ if( ! $dates[0]['startDate'] ) {
 <ul class="wfe-dates <?php echo $class; ?>">
     <?php foreach( $dates as $date ) { ?>
         <li>
-            <i class="fa fa-calendar"></i>
+            <i class="far fa-calendar"></i>
             <div class="wfe-dates-date">
                 <?php if($date['title']) { ?>
                     <b class="wfe-dates-title"><?php echo $date['title']; ?>:</b>

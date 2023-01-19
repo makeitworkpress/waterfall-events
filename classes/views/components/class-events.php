@@ -209,7 +209,7 @@ class Events extends Component {
       }
 
       if( $location ) {
-        echo '<div class="wfe-events-item-location"><i class="fa fa-map-marker"></i><span>' . $location . '</span></div>';
+        echo '<div class="wfe-events-item-location"><i class="fas fa-map-marker"></i><span>' . $location . '</span></div>';
       }
 
     }

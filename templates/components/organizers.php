@@ -13,10 +13,10 @@ if( ! $organizers ) {
         <?php foreach( $organizers as $organizer ) { ?>
             <li>
                 <h3><a href="<?php echo $organizer['link']; ?>" title="<?php echo $organizer['name']; ?>"><?php echo $organizer['name']; ?></a></h3>
-                <?php foreach(['email' => ['envelope-o', 'mailto:'], 'phone' => ['phone', 'tel:'], 'website' => ['link', '']] as $meta => $attr ) { ?>
+                <?php foreach(['email' => ['envelope', 'mailto:'], 'phone' => ['phone', 'tel:'], 'website' => ['link', '']] as $meta => $attr ) { ?>
                     <?php if($organizer[$meta]) { ?>
                         <div class="wfe-organizers-meta">
-                            <i class="fa fa-<?php echo $attr[0]; ?>"></i>
+                            <i class="fas fa-<?php echo $attr[0]; ?>"></i>
                             <a href="<?php echo $attr[1] . $organizer[$meta]; ?>" target="_blank"><?php echo $organizer[$meta]; ?></a>
                         </div>
                     <?php } ?>
