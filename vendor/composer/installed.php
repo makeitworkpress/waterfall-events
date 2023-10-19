@@ -1,34 +1,34 @@
-<?php return array (
-  'root' => 
-  array (
-    'pretty_version' => 'dev-main',
-    'version' => 'dev-main',
-    'aliases' => 
-    array (
+<?php return array(
+    'root' => array(
+        'name' => 'makeitworkpress/waterfall-events',
+        'pretty_version' => 'dev-main',
+        'version' => 'dev-main',
+        'reference' => '925d5e36aa9ecbaaad60f61fd78bfb5c13b89763',
+        'type' => 'library',
+        'install_path' => __DIR__ . '/../../',
+        'aliases' => array(),
+        'dev' => true,
     ),
-    'reference' => '66d76b6f1bd11e20be35d8b258b6c7a3753e68b4',
-    'name' => 'makeitworkpress/waterfall-events',
-  ),
-  'versions' => 
-  array (
-    'makeitworkpress/waterfall-events' => 
-    array (
-      'pretty_version' => 'dev-main',
-      'version' => 'dev-main',
-      'aliases' => 
-      array (
-      ),
-      'reference' => '66d76b6f1bd11e20be35d8b258b6c7a3753e68b4',
+    'versions' => array(
+        'makeitworkpress/waterfall-events' => array(
+            'pretty_version' => 'dev-main',
+            'version' => 'dev-main',
+            'reference' => '925d5e36aa9ecbaaad60f61fd78bfb5c13b89763',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../../',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'makeitworkpress/wp-updater' => array(
+            'pretty_version' => 'dev-master',
+            'version' => 'dev-master',
+            'reference' => '436587bd57e16f8806bf6eac7056e9eca7e9744c',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../makeitworkpress/wp-updater',
+            'aliases' => array(
+                0 => '9999999-dev',
+            ),
+            'dev_requirement' => false,
+        ),
     ),
-    'makeitworkpress/wp-updater' => 
-    array (
-      'pretty_version' => 'dev-master',
-      'version' => 'dev-master',
-      'aliases' => 
-      array (
-        0 => '9999999-dev',
-      ),
-      'reference' => '61eee29ae99aeae9b8cfac90839b333815da1f46',
-    ),
-  ),
 );

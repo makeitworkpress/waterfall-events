@@ -66,7 +66,7 @@ class Plugin {
         /**
          * Adds our updater
          */
-        $this->updater =\MakeItWorkPress\WP_Updater\Boot::instance();
+        $this->updater = \MakeitWorkPress\WP_Updater\Boot::instance();
         $this->updater->add(['type' => 'plugin', 'source' => 'https://github.com/makeitworkpress/waterfall-events']);
 
     }

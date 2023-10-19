@@ -4,7 +4,7 @@
     "repositories": [        
         {
             "type": "vcs",
-            "url": "https://github.com/makeitworkpress/wp-updater.git" // NOT STRICYL NEEDED WHEN USING WATERFALL
+            "url": "https://github.com/makeitworkpress/wp-updater.git"
         }        
     ],
     "require": {
