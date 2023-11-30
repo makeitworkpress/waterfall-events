@@ -11,7 +11,7 @@ $options = [
             'events_general' => [
                 'icon'      => 'calendar_view_day',
                 'id'        => 'events_general_section',
-                'title'     => __('Events', 'wfe'),
+                'title'     => __('Event Settings', 'wfe'),
                 'fields'    => [
                     [
                         'columns'       => 'half',

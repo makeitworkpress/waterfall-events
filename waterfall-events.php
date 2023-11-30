@@ -48,7 +48,7 @@ spl_autoload_register( function($class_name) {
     array_splice($class_names, 2, 0, 'src');
     $class_names[0] = strtolower($class_names[0]);
     $class_names[1] = strtolower($class_names[1]);
-    $vendor_class_file  = dirname(__FILE__) . '/vendor/' . implode('/', $class_names) . '/' . $final_class . '.php';
+    $vendor_class_file = dirname(__FILE__) . '/vendor/' . implode('/', $class_names) . '/' . $final_class . '.php';
 
     if( file_exists($vendor_class_file) ) {
         require_once( $vendor_class_file );    
