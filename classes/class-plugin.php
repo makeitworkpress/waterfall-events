@@ -90,11 +90,9 @@ class Plugin {
         ];
 
         foreach( $modules as $module ) {
-
             if( class_exists($module) ) {
                 new $module();
             }
-            
         }     
         
         /**
@@ -126,7 +124,7 @@ class Plugin {
 
         }
 
-        $configurations = apply_filters('waterfall_reviews_configurations', $configurations);
+        $configurations = apply_filters('waterfall_events_configurations', $configurations);
 
         // Only a set of predefined configurations can be added
         foreach( $configurations as $name => $values ) {
