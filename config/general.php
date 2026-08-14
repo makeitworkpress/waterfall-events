@@ -24,13 +24,13 @@ $configurations = [
                 'url'           => WFE_URI
             ], 
             'name'          => 'wfe',
-            'src'           => WFE_URI . 'assets/js/wfe.js',
+            'src'           => WFE_URI . 'assets/js/waterfall-events.min.js',
         ],
         'cluster'       => ['handle' => 'wfe-markercluster', 'src' => WFE_URI . 'assets/vendor/markercluster/index.min.js'],
         'calendar'      => ['handle' => 'wfe-fullcalendar', 'src' => WFE_URI . 'assets/vendor/fullcalendar/main.min.js'],
         'locales'       => ['handle' => 'wfe-fullcalendar-locales', 'src' => WFE_URI . 'assets/vendor/fullcalendar/locales-all.min.js'],
         'calendar_css'  => ['handle' => 'wfe-fullcalendar-css', 'src' => WFE_URI . 'assets/vendor/fullcalendar/main.min.css'],
-        'scripts'       => ['handle' => 'wfe-admin-scripts', 'src' => WFE_URI . 'assets/js/wfe-admin.js',  'deps' => ['wp-editor'], 'context' => 'block-editor']
+        'scripts'       => ['handle' => 'wfe-admin-scripts', 'src' => WFE_URI . 'assets/js/wfe-admin.min.js',  'deps' => ['wp-editor'], 'context' => 'block-editor']
     ],
     'register' => [
         'post_types' => [

@@ -1,13 +1,23 @@
 {
+    "license": "GPL-3.0",
     "name": "waterfall-events",
     "version": "1.0.0",
+    "private": true,
     "author": "Michiel Tramper",
-    "description": "The package for the Waterfall Events Plugin",
+    "description": "The Waterfall Events plugin upgrades your Waterfall WordPress theme with event capabilities.",
     "devDependencies": {
-        "rollup": "latest"
+        "@types/google.maps": "^3.58.1",
+        "esbuild": "^0.25.0",
+        "less": "^4.2.0",
+        "typescript": "^5.5.0"
     },
     "scripts": {
-        "build": "rollup --config",
-        "watch": "rollup --config --watch"
-    }  
+        "build": "node esbuild.mjs",
+        "watch": "node esbuild.mjs --watch",
+        "type-check": "tsc --noEmit"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git@github.com:makeitworkpress/waterfall-events.git"
+    }
 }
