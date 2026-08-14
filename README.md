@@ -28,8 +28,9 @@ The plugin is an *extension* of Waterfall rather than a standalone plugin. It do
 
 1. Install and activate the Waterfall theme (or a child theme with `Template: waterfall`). Without it the plugin disables itself and shows an admin notice.
 2. Drop this plugin into `wp-content/plugins/waterfall-events` and activate it.
-3. Go to **Settings → Permalinks** and press *Save*. The plugin registers a post type and four taxonomies but does not flush rewrite rules itself, so this step is required for `/events/…` URLs to resolve.
-4. Set a Google Maps API key under **Waterfall → Maps API Key** if you intend to use the map, the single-event location map, or the address autocomplete in the admin.
+3. Set a Google Maps API key under **Waterfall → Maps API Key** if you intend to use the map, the single-event location map, or the address autocomplete in the admin.
+
+Rewrite rules are flushed automatically on the first request after activation, so `/events/…` URLs work straight away.
 
 The plugin keeps itself up to date from its GitHub repository through `makeitworkpress/wp-updater`, which is bundled in `vendor/`.
 
@@ -191,8 +192,13 @@ Class loading uses a custom `spl_autoload_register` (no Composer autoloader): `W
 
 ### Constants
 
+- `WFE_VERSION` — plugin version, also used as the rewrite rules marker
 - `WFE_PATH` — plugin directory path
 - `WFE_URI` — plugin directory URL
+
+### Rewrite rules
+
+The post type and taxonomies are registered on `init` by the theme, which is well after `register_activation_hook` runs. Activating therefore only deletes the `wfe_rewrite_version` option, and `Plugin::maybe_flush_rewrite_rules()` performs the actual flush on `wp_loaded` once `events` exists. Because the stored version is the marker, this happens at most once per site per plugin version, covers every site of a network wide activation, and re-runs automatically when an update changes one of the rewrite slugs.
 
 ## Development
 
@@ -243,7 +249,6 @@ composer install
 
 - **Elementor is effectively required** to display the calendar, map or events list. There are no shortcodes and the events archive is not customised.
 - **The map needs a Google Maps API key** on the theme options page, otherwise the map canvas renders empty and the admin address autocomplete does not work.
-- **Permalinks must be flushed manually** after activation.
 - The calendar and the map both query *all* published events with `posts_per_page => -1` and inline them into the page. This does not scale to very large event archives.
 - Map filtering happens entirely client-side on the already-loaded marker set; no AJAX request is involved.
 - Assets (FullCalendar, MarkerClusterer, `waterfall-events.min.js`, the plugin CSS) are enqueued on every front-end page rather than conditionally.

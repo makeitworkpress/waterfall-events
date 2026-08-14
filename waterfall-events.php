@@ -57,11 +57,31 @@ spl_autoload_register( function($class_name) {
 } );
 
 /**
+ * Defines our constants.
+ * 
+ * These are defined at file scope rather than on plugins_loaded, because during activation the 
+ * plugin file is included after that hook has already fired, and the activation hook below 
+ * relies on WFE_VERSION being available.
+ */
+defined( 'WFE_VERSION' ) or define( 'WFE_VERSION', '0.1.8' );
+defined( 'WFE_PATH' ) or define( 'WFE_PATH', plugin_dir_path( __FILE__ ) );
+defined( 'WFE_URI' ) or define( 'WFE_URI', plugin_dir_url( __FILE__ ) );
+
+/**
  * Boots our plugin
  */
 add_action( 'plugins_loaded', function() {
-    defined( 'WFE_PATH' ) or define( 'WFE_PATH', plugin_dir_path( __FILE__ ) );
-    defined( 'WFE_URI' ) or define( 'WFE_URI', plugin_dir_url( __FILE__ ) );
-
     Waterfall_Events\Plugin::instance();
+} );
+
+/**
+ * Schedules a flush of the rewrite rules upon activation.
+ * 
+ * Our post type and taxonomies are registered on init by the parent theme, which is long after 
+ * this hook has run, so flushing here would store a set of rules that misses our event rules. 
+ * Instead we only invalidate the stored rewrite version, after which the actual flush happens 
+ * on wp_loaded through Plugin::maybe_flush_rewrite_rules().
+ */
+register_activation_hook( __FILE__, function() {
+    delete_option( 'wfe_rewrite_version' );
 } );

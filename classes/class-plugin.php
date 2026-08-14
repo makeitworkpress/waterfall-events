@@ -63,11 +63,47 @@ class Plugin {
             return $rules;
         } );
 
+        // Flushes our rewrite rules after activation or after an update that changed our rules
+        add_action( 'wp_loaded', [$this, 'maybe_flush_rewrite_rules'] );
+
         /**
          * Adds our updater
          */
         $this->updater = \MakeitWorkPress\WP_Updater\Boot::instance();
         $this->updater->add(['type' => 'plugin', 'source' => 'https://github.com/makeitworkpress/waterfall-events']);
+
+    }
+
+    /**
+     * Flushes the rewrite rules once, so our event permalinks work without visiting the 
+     * permalink settings screen manually.
+     * 
+     * This is hooked onto wp_loaded rather than onto the activation hook, because our post type 
+     * and taxonomies are only registered on init. Flushing any earlier would store a set of 
+     * rules that misses our event rules entirely.
+     * 
+     * The stored version acts as the marker, which means this runs at most once per site per 
+     * plugin version. That also covers a network wide activation, where the activation hook only 
+     * runs for a single site, as well as updates that change one of our rewrite slugs.
+     */
+    public function maybe_flush_rewrite_rules() {
+
+        if( get_option('wfe_rewrite_version') === WFE_VERSION ) {
+            return;
+        }
+
+        /**
+         * Our rules can only be generated once our post type is actually registered. If it is not, 
+         * the parent theme did not process our configurations and we should try again on a later 
+         * request rather than storing an incomplete set of rules.
+         */
+        if( ! post_type_exists('events') ) {
+            return;
+        }
+
+        flush_rewrite_rules();
+
+        update_option( 'wfe_rewrite_version', WFE_VERSION );
 
     }
 

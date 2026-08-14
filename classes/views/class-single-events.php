@@ -14,9 +14,9 @@ class Single_Events extends \Waterfall_Events\Base {
 
         $this->defaults = [];
 
-        $this->actions = [  
+        $this->actions = [
             ['components_content_before', 'render_summary'],
-            ['components_content_after', 'render_details'] 
+            ['components_content_after', 'render_details']
         ];
 
         $this->filters = [];
@@ -27,7 +27,7 @@ class Single_Events extends \Waterfall_Events\Base {
      * Render summary (description + registration button)
      */
     public function render_summary() {
-        
+
         global $post;
 
         $manual = get_post_meta($post->ID, 'wfe_disable_components', true);
@@ -35,8 +35,8 @@ class Single_Events extends \Waterfall_Events\Base {
         if( is_singular('events') && ! $manual ) {
             (new Components\Summary())->render();
         }
-            
-    }   
+
+    }
 
     /**
      * Render details
@@ -44,6 +44,11 @@ class Single_Events extends \Waterfall_Events\Base {
     public function render_details() {
 
         global $post;
+        global $wp_query;
+
+        var_dump($wp_query);
+
+        var_dump($post->ID);
 
         $manual = get_post_meta($post->ID, 'wfe_disable_components', true);
 
