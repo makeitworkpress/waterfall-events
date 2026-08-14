@@ -133,7 +133,7 @@ $markup  = $summary->render( false );
 | `Calendar` | Mount point for FullCalendar. |
 | `Events` | Delegates to the theme's `posts` molecule. |
 
-`Component::render()` resolves `templates/components/{name}.php`, extracts `$props` into local variables and includes the file. On single events, `Views\Single_Events` renders `Summary` on `components_content_before` and `Details` + `Organizers` + `Locations` on `components_content_after`, unless `wfe_disable_components` is set.
+`Component::render()` resolves `templates/components/{name}.php`, extracts `$props` into local variables and includes the file. On single events, `Views\Single_Events` renders `Summary` on `components_content_before` and `Details` + `Organizers` + `Locations` on `components_content_after`. Those hooks are fired by the WP-Components `content` atom for both the content and the excerpt type, so they also run for every event nested inside the page, such as the related events. The class therefore only renders when the global post matches `get_queried_object_id()`, and when `wfe_disable_components` is not set on that event.
 
 ### Overriding a template
 
@@ -192,7 +192,7 @@ Class loading uses a custom `spl_autoload_register` (no Composer autoloader): `W
 
 ### Constants
 
-- `WFE_VERSION` — plugin version, also used as the rewrite rules marker
+- `WFE_VERSION` — read from the `Version` header of `waterfall-events.php`, also used as the rewrite rules marker
 - `WFE_PATH` — plugin directory path
 - `WFE_URI` — plugin directory URL
 

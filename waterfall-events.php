@@ -59,13 +59,21 @@ spl_autoload_register( function($class_name) {
 /**
  * Defines our constants.
  * 
+ * The version is read straight from the plugin header above, so it only has to be maintained 
+ * in one place. get_file_data() lives in wp-includes/functions.php, which is loaded long before 
+ * plugins are, so it is safe to call this early.
+ * 
  * These are defined at file scope rather than on plugins_loaded, because during activation the 
- * plugin file is included after that hook has already fired, and the activation hook below 
- * relies on WFE_VERSION being available.
+ * plugin file is included after that hook has already fired.
  */
-defined( 'WFE_VERSION' ) or define( 'WFE_VERSION', '0.1.8' );
 defined( 'WFE_PATH' ) or define( 'WFE_PATH', plugin_dir_path( __FILE__ ) );
 defined( 'WFE_URI' ) or define( 'WFE_URI', plugin_dir_url( __FILE__ ) );
+
+if( ! defined('WFE_VERSION') ) {
+    $wfe_plugin_header = get_file_data( __FILE__, ['version' => 'Version'] );
+    define( 'WFE_VERSION', $wfe_plugin_header['version'] ? $wfe_plugin_header['version'] : '0.0.0' );
+    unset( $wfe_plugin_header );
+}
 
 /**
  * Boots our plugin
