@@ -3,7 +3,7 @@
 Plugin Name:  Waterfall Events
 Plugin URI:   https://makeitwork.press/wordpress-plugins/waterfall-events/
 Description:  The Waterfall Events plugin upgradres your Waterfall WordPress theme with event capabilities.
-Version:      0.1.8
+Version:      0.1.9
 Author:       Make it WorkPress
 Author URI:   https://makeitwork.press/
 License:      GPL3
@@ -18,8 +18,8 @@ $theme = wp_get_theme();
 
 if( $theme->template != 'waterfall' ) {
     add_action( 'admin_notices', function() {
-        echo '<div class="error"><p>' . __('The Waterfall theme is not present or activated. The Waterfall Events plugin requires the Waterfall theme to function.', 'wfe') . '</p></div>';      
-    });     
+        echo '<div class="error"><p>' . __('The Waterfall theme is not present or activated. The Waterfall Events plugin requires the Waterfall theme to function.', 'wfe') . '</p></div>';
+    });
     return;
 }
 
@@ -27,9 +27,9 @@ if( $theme->template != 'waterfall' ) {
  * Registers the autoloading for plugin classes
  */
 spl_autoload_register( function($class_name) {
-    
+
     $called_class       = str_replace( '\\', '/', str_replace( '_', '-', $class_name ) );
-    
+
     $class_names        = explode( '/', str_replace( 'Waterfall-Events/', '', $called_class) );
     $final_class        = array_pop($class_names);
     $class_rel_path     = $class_names ? implode('/', $class_names) . '/class-' . $final_class : 'class-' . $final_class;
@@ -39,7 +39,7 @@ spl_autoload_register( function($class_name) {
         require_once( $class_file );
         return;
     }
-        
+
     // Require Vendor (composer) classes
     if( ! isset($class_names[0]) || $class_names[0] !== 'MakeitWorkPress' || ! isset($class_names[1]) ) {
         return;
@@ -51,19 +51,19 @@ spl_autoload_register( function($class_name) {
     $vendor_class_file = dirname(__FILE__) . '/vendor/' . implode('/', $class_names) . '/' . $final_class . '.php';
 
     if( file_exists($vendor_class_file) ) {
-        require_once( $vendor_class_file );    
-    }   
-   
+        require_once( $vendor_class_file );
+    }
+
 } );
 
 /**
  * Defines our constants.
- * 
- * The version is read straight from the plugin header above, so it only has to be maintained 
- * in one place. get_file_data() lives in wp-includes/functions.php, which is loaded long before 
+ *
+ * The version is read straight from the plugin header above, so it only has to be maintained
+ * in one place. get_file_data() lives in wp-includes/functions.php, which is loaded long before
  * plugins are, so it is safe to call this early.
- * 
- * These are defined at file scope rather than on plugins_loaded, because during activation the 
+ *
+ * These are defined at file scope rather than on plugins_loaded, because during activation the
  * plugin file is included after that hook has already fired.
  */
 defined( 'WFE_PATH' ) or define( 'WFE_PATH', plugin_dir_path( __FILE__ ) );
@@ -84,10 +84,10 @@ add_action( 'plugins_loaded', function() {
 
 /**
  * Schedules a flush of the rewrite rules upon activation.
- * 
- * Our post type and taxonomies are registered on init by the parent theme, which is long after 
- * this hook has run, so flushing here would store a set of rules that misses our event rules. 
- * Instead we only invalidate the stored rewrite version, after which the actual flush happens 
+ *
+ * Our post type and taxonomies are registered on init by the parent theme, which is long after
+ * this hook has run, so flushing here would store a set of rules that misses our event rules.
+ * Instead we only invalidate the stored rewrite version, after which the actual flush happens
  * on wp_loaded through Plugin::maybe_flush_rewrite_rules().
  */
 register_activation_hook( __FILE__, function() {
